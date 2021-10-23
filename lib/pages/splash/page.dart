@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 enum _LoginState { notLoggedIn, loggedIn }
 
 class SplashPage extends StatefulWidget {
-  static const String route = '/splash';
+  static const String route = '/';
 
   const SplashPage({Key? key}) : super(key: key);
 
