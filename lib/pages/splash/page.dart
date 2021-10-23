@@ -26,8 +26,6 @@ class _SplashPageState extends State<SplashPage> {
   Future<void> _bootstrap() async {
     await Firebase.initializeApp();
 
-    await FirebaseAuth.instance.setPersistence(Persistence.LOCAL);
-
     switch (_checkLoginState()) {
       case _LoginState.notLoggedIn:
         Navigator.of(context).pushReplacementNamed(LoginPage.route);
