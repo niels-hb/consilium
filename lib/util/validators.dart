@@ -25,7 +25,7 @@ class Validators {
       return PasswordValidationError.invalidPassword;
     }
 
-    final weakRegExp = RegExp(r'^.{8,}$');
+    final weakRegExp = RegExp(r'^.{6,}$');
     if (!weakRegExp.hasMatch(string)) {
       return PasswordValidationError.weakPassword;
     }
