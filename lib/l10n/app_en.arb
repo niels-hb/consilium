@@ -1,6 +1,10 @@
 {
-    "helloWorld": "Hello World!",
-    "@helloWorld": {
-      "description": "The conventional newborn programmer greeting"
+    "appName": "Consilium",
+    "@appName": {
+      "description": "The name of the application."
+    },
+    "loginPageTitle": "Sign in or create an account",
+    "@loginPageTitle": {
+      "description": "Title displayed on the login page."
     }
 }

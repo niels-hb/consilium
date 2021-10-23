@@ -1,3 +1,4 @@
 {
-    "helloWorld": "Hallo Welt!"
+    "appName": "Consilium",
+    "loginPageTitle": "Einloggen oder Konto erstellen"
 }
