@@ -1,4 +1,16 @@
 {
     "appName": "Consilium",
-    "loginPageTitle": "Einloggen oder Konto erstellen"
+    "loginPageTitle": "Einloggen oder Konto erstellen",
+    "or": "oder",
+    "signInWithGoogle": "Anmelden mit Google",
+    "signInWithGitHub": "Anmelden mit GitHub",
+    "email": "Email",
+    "password": "Passwort",
+    "registrationIfNoLoginFoundHint": "(Ein Konto wird für Sie erstellt, falls Sie noch keines haben.)",
+    "signIn": "Anmelden",
+    "unknownError": "Ein unbekannter Fehler ist aufgetreten.",
+    "emptyInput": "Dieses Feld ist erforderlich.",
+    "invalidEmail": "Diese E-Mail Adresse ist ungültig.",
+    "invalidPassword": "Dieses Passwort ist ungültig.",
+    "weakPassword": "Dieses Passwort ist zu schwach. Es sind mindestens 6 Zeichen erforderlich."
 }

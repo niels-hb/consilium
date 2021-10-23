@@ -6,5 +6,35 @@
     "loginPageTitle": "Sign in or create an account",
     "@loginPageTitle": {
       "description": "Title displayed on the login page."
+    },
+    "or": "or",
+    "signInWithGoogle": "Sign in with Google",
+    "signInWithGitHub": "Sign in with GitHub",
+    "email": "Email",
+    "password": "Password",
+    "registrationIfNoLoginFoundHint": "(An account will be created for you if you do not have one already.)",
+    "@registrationIfNoLoginFoundHint": {
+      "description": "Hint displayed on the login page informing the user that an account will be created if it doesn't exist."
+    },
+    "signIn": "Sign in",
+    "unknownError": "An unkown error occured.",
+    "@unknownError": {
+      "description": "Generic error message."
+    },
+    "emptyInput": "This field is required.",
+    "@emptyInput": {
+      "description": "Text field validation message for required inputs."
+    },
+    "invalidEmail": "This email address is not valid.",
+    "@invalidEmail": {
+      "description": "Text field validation message if the entered email is invalid."
+    },
+    "invalidPassword": "This password is invalid.",
+    "@invalidPassword": {
+      "description": "Text field validation message if the entered password is invalid."
+    },
+    "weakPassword": "This password is too weak. At least 6 characters are required.",
+    "@weakPassword": {
+      "description": "Text field validation message if the entered password is too weak."
     }
 }
