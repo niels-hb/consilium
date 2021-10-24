@@ -143,6 +143,7 @@ class _SignInFormState extends State<_SignInForm> {
         children: [
           _buildTextFormField(
             controller: _emailController,
+            keyboardType: TextInputType.emailAddress,
             labelText: AppLocalizations.of(context)!.email,
             validator: (String? email) => _validateEmail(email),
           ),
@@ -175,11 +176,13 @@ class _SignInFormState extends State<_SignInForm> {
     required String? Function(String?) validator,
     required String labelText,
     bool obscureText = false,
+    TextInputType? keyboardType,
   }) {
     return TextFormField(
       controller: controller,
       validator: validator,
       obscureText: obscureText,
+      keyboardType: keyboardType,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       decoration: InputDecoration(
         labelText: labelText,
