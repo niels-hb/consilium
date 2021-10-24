@@ -44,7 +44,7 @@ class _HomePageState extends State<HomePage> {
               onPressed: () {
                 Navigator.of(context).pushNamed(LoginPage.route);
               },
-              child: Text(AppLocalizations.of(context)!.signIn),
+              child: Text(AppLocalizations.of(context)!.signIn.toUpperCase()),
             ),
           );
         },
