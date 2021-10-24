@@ -12,5 +12,8 @@
     "emptyInput": "Dieses Feld ist erforderlich.",
     "invalidEmail": "Diese E-Mail Adresse ist ungültig.",
     "invalidPassword": "Dieses Passwort ist ungültig.",
-    "weakPassword": "Dieses Passwort ist zu schwach. Es sind mindestens 6 Zeichen erforderlich."
+    "weakPassword": "Dieses Passwort ist zu schwach. Es sind mindestens 6 Zeichen erforderlich.",
+    "overview": "Übersicht",
+    "schedule": "Plan",
+    "details": "Details"
 }
