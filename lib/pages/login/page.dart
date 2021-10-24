@@ -149,6 +149,7 @@ class _SignInFormState extends State<_SignInForm> {
           const SizedBox(height: 8.0),
           _buildTextFormField(
             controller: _passwordController,
+            obscureText: true,
             labelText: AppLocalizations.of(context)!.password,
             validator: (String? password) => _validatePassword(password),
           ),
@@ -173,10 +174,12 @@ class _SignInFormState extends State<_SignInForm> {
     required TextEditingController controller,
     required String? Function(String?) validator,
     required String labelText,
+    bool obscureText = false,
   }) {
     return TextFormField(
       controller: controller,
       validator: validator,
+      obscureText: obscureText,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       decoration: InputDecoration(
         labelText: labelText,
