@@ -199,15 +199,64 @@ class _SignInFormState extends State<_SignInForm> {
       _active = false;
     });
 
-    // TODO
-    await Future.delayed(const Duration(seconds: 1));
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Not implemented yet!')),
-    );
+    try {
+      FirebaseAuthException? loginResult = await _attemptLogin();
+
+      if (loginResult != null && loginResult.code == 'user-not-found') {
+        FirebaseAuthException? registrationResult =
+            await _attemptRegistration();
+
+        if (registrationResult == null) {
+          loginResult = await _attemptLogin();
+        } else {
+          throw registrationResult;
+        }
+      }
+
+      if (loginResult == null) {
+        Navigator.of(context).pop();
+      } else {
+        throw loginResult;
+      }
+    } on FirebaseAuthException catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            e.message ?? AppLocalizations.of(context)!.unknownError,
+          ),
+        ),
+      );
+    }
 
     setState(() {
       _active = true;
     });
+  }
+
+  Future<FirebaseAuthException?> _attemptLogin() async {
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
+    } on FirebaseAuthException catch (e) {
+      return e;
+    }
+
+    return null;
+  }
+
+  Future<FirebaseAuthException?> _attemptRegistration() async {
+    try {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
+    } on FirebaseAuthException catch (e) {
+      return e;
+    }
+
+    return null;
   }
 
   String? _validateEmail(String? email) {
