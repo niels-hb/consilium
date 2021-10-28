@@ -25,6 +25,12 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.appName),
+        actions: [
+          IconButton(
+            onPressed: _signOut,
+            icon: const Icon(Icons.logout),
+          ),
+        ],
       ),
       body: StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
@@ -59,6 +65,11 @@ class _HomePageState extends State<HomePage> {
         },
       ),
     );
+  }
+
+  void _signOut() async {
+    await FirebaseAuth.instance.signOut();
+    Navigator.of(context).pushReplacementNamed(LoginPage.route);
   }
 
   List<TabDefinition> _getTabs() {
