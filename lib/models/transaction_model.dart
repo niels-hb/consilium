@@ -21,14 +21,19 @@ class TransactionModel {
 
   TransactionModel.fromJson(Map<String, Object?> json)
       : this(
-          amountCents: int.tryParse('${json['amount_cents']}') ?? -1,
-          category:
-              EnumToString.fromString(Category.values, '${json['category']}') ??
-                  Category.miscellaneous,
+          amountCents: int.tryParse(
+                json['amount_cents'].toString(),
+              ) ??
+              -1,
+          category: EnumToString.fromString(
+                Category.values,
+                json['category'].toString(),
+              ) ??
+              Category.miscellaneous,
           createdOn: (json['created_on'] as Timestamp).toDate(),
-          name: '${json['name']}',
-          uid: '${json['uid']}',
-          note: '${json['note']}',
+          name: json['name'].toString(),
+          uid: json['uid'].toString(),
+          note: json['note']?.toString(),
         );
 
   Map<String, Object?> toJson() => {
