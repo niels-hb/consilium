@@ -265,24 +265,24 @@ class _SignInFormState extends State<_SignInForm> {
 
   String? _validateEmail(String? email) {
     switch (Validators.email(email)) {
-      case EmailValidationError.emptyInput:
+      case ValidationError.emptyInput:
         return AppLocalizations.of(context)!.emptyInput;
-      case EmailValidationError.invalidEmail:
+      case ValidationError.invalidEmail:
         return AppLocalizations.of(context)!.invalidEmail;
-      case null:
+      default:
         break;
     }
   }
 
   String? _validatePassword(String? password) {
     switch (Validators.password(password)) {
-      case PasswordValidationError.emptyInput:
+      case ValidationError.emptyInput:
         return AppLocalizations.of(context)!.emptyInput;
-      case PasswordValidationError.invalidPassword:
+      case ValidationError.invalidPassword:
         return AppLocalizations.of(context)!.invalidPassword;
-      case PasswordValidationError.weakPassword:
+      case ValidationError.weakPassword:
         return AppLocalizations.of(context)!.weakPassword;
-      case null:
+      default:
         break;
     }
   }

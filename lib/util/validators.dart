@@ -1,33 +1,32 @@
-enum EmailValidationError { emptyInput, invalidEmail }
-enum PasswordValidationError { emptyInput, invalidPassword, weakPassword }
+enum ValidationError { emptyInput, invalidEmail, invalidPassword, weakPassword }
 
 class Validators {
-  static EmailValidationError? email(String? string) {
+  static ValidationError? email(String? string) {
     if (string == null || string.isEmpty) {
-      return EmailValidationError.emptyInput;
+      return ValidationError.emptyInput;
     }
 
     final regExp = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
     if (!regExp.hasMatch(string)) {
-      return EmailValidationError.invalidEmail;
+      return ValidationError.invalidEmail;
     }
 
     return null;
   }
 
-  static PasswordValidationError? password(String? string) {
+  static ValidationError? password(String? string) {
     if (string == null || string.isEmpty) {
-      return PasswordValidationError.emptyInput;
+      return ValidationError.emptyInput;
     }
 
     final invalidRegExp = RegExp(r'[ ]');
     if (invalidRegExp.hasMatch(string)) {
-      return PasswordValidationError.invalidPassword;
+      return ValidationError.invalidPassword;
     }
 
     final weakRegExp = RegExp(r'^.{6,}$');
     if (!weakRegExp.hasMatch(string)) {
-      return PasswordValidationError.weakPassword;
+      return ValidationError.weakPassword;
     }
 
     return null;
