@@ -1,4 +1,5 @@
 import 'package:consilium/pages/home/page.dart';
+import 'package:consilium/util/custom_theme.dart';
 import 'package:consilium/util/validators.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,7 @@ class LoginPage extends StatelessWidget {
       body: Center(
         child: ConstrainedBox(
           constraints: BoxConstraints(
-            maxWidth: 0.8 * MediaQuery.of(context).size.width,
+            maxWidth: CustomTheme.getMaxWidth(context),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
