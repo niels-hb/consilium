@@ -17,7 +17,7 @@
       "description": "Hint displayed on the login page informing the user that an account will be created if it doesn't exist."
     },
     "signIn": "Sign in",
-    "unknownError": "An unkown error occured.",
+    "unknownError": "An unknown error occurred.",
     "@unknownError": {
       "description": "Generic error message."
     },
@@ -39,5 +39,11 @@
     },
     "overview": "Overview",
     "schedule": "Schedule",
-    "details": "Details"
+    "details": "Details",
+    "monthToDate": "Month to date spending",
+    "@monthToDate": {
+      "description": "Displayed on the overview page to indicate the amount spent since the beginning of the month."
+    },
+    "upcomingPayments": "Upcoming payments",
+    "latestTransactions": "Recent payments"
 }

@@ -15,5 +15,8 @@
     "weakPassword": "Dieses Passwort ist zu schwach. Es sind mindestens 6 Zeichen erforderlich.",
     "overview": "Übersicht",
     "schedule": "Plan",
-    "details": "Details"
+    "details": "Details",
+    "monthToDate": "Ausgaben seit Monatsbeginn",
+    "upcomingPayments": "Nächste geplante Ausgaben",
+    "latestTransactions": "Letzte Ausgaben"
 }
