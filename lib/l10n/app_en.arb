@@ -48,5 +48,9 @@
     "latestTransactions": "Recent payments",
     "addTransaction": "Add payment",
     "add": "Add",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "emptyResultSet": "No results.",
+    "@emptyResultSet": {
+      "description": "Displayed when a list contains no elements (e.g. when the data set is empty)."
+    }
 }

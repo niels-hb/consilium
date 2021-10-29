@@ -21,5 +21,6 @@
     "latestTransactions": "Letzte Ausgaben",
     "addTransaction": "Zahlung hinzufügen",
     "add": "Hinzufügen",
-    "cancel": "Abbrechen"
+    "cancel": "Abbrechen",
+    "emptyResultSet": "Keine Ergebnisse."
 }

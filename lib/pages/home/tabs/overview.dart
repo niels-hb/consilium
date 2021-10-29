@@ -156,6 +156,12 @@ class _LatestTransactionsCard extends StatelessWidget {
           List<QueryDocumentSnapshot<TransactionModel>> data =
               snapshot.data!.docs;
 
+          if (data.isEmpty) {
+            return Center(
+              child: Text(AppLocalizations.of(context)!.emptyResultSet),
+            );
+          }
+
           return ListView.builder(
             shrinkWrap: true,
             itemCount: data.length,
