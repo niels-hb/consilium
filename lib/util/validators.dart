@@ -1,6 +1,14 @@
 enum ValidationError { emptyInput, invalidEmail, invalidPassword, weakPassword }
 
 class Validators {
+  static ValidationError? required(String? string) {
+    if (string == null || string.isEmpty) {
+      return ValidationError.emptyInput;
+    }
+
+    return null;
+  }
+
   static ValidationError? email(String? string) {
     if (string == null || string.isEmpty) {
       return ValidationError.emptyInput;
