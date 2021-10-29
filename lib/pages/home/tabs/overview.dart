@@ -1,4 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:consilium/models/transaction_model.dart';
+import 'package:consilium/services/firebase_service.dart';
 import 'package:consilium/util/custom_theme.dart';
+import 'package:consilium/widgets/add_transaction_dialog.dart';
+import 'package:consilium/widgets/transaction_list_tile.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -8,12 +14,12 @@ class OverviewTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      children: const [
-        SizedBox(height: 16.0),
-        _MonthToDateCard(),
-        SizedBox(height: 16.0),
-        _UpcomingPaymentsCard(),
-        SizedBox(height: 16.0),
+      children: [
+        const SizedBox(height: 16.0),
+        const _MonthToDateCard(),
+        const SizedBox(height: 16.0),
+        const _UpcomingPaymentsCard(),
+        const SizedBox(height: 16.0),
         _LatestTransactionsCard(),
       ],
     );
@@ -90,7 +96,13 @@ class _UpcomingPaymentsCard extends StatelessWidget {
 }
 
 class _LatestTransactionsCard extends StatelessWidget {
-  const _LatestTransactionsCard({Key? key}) : super(key: key);
+  final Query<TransactionModel> _transactions =
+      FirebaseService.getTransactionsCollection()
+          .where('uid', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+          .orderBy('created_on', descending: true)
+          .limit(10);
+
+  _LatestTransactionsCard({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -131,14 +143,39 @@ class _LatestTransactionsCard extends StatelessWidget {
   }
 
   Widget _buildTransactionList() {
-    return const Text('TODO');
+    return StreamBuilder<QuerySnapshot<TransactionModel>>(
+      stream: _transactions.snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return Center(
+            child: Text(snapshot.error.toString()),
+          );
+        }
+
+        if (snapshot.hasData) {
+          List<QueryDocumentSnapshot<TransactionModel>> data =
+              snapshot.data!.docs;
+
+          return ListView.builder(
+            shrinkWrap: true,
+            itemCount: data.length,
+            itemBuilder: (context, index) => TransactionListTile(
+              transaction: data[index].data(),
+            ),
+          );
+        }
+
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );
   }
 
   void _addTransaction(BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('TODO'),
-      ),
+    showDialog(
+      context: context,
+      builder: (context) => const AddTransactionDialog(),
     );
   }
 }

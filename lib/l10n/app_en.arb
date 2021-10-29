@@ -45,5 +45,8 @@
       "description": "Displayed on the overview page to indicate the amount spent since the beginning of the month."
     },
     "upcomingPayments": "Upcoming payments",
-    "latestTransactions": "Recent payments"
+    "latestTransactions": "Recent payments",
+    "addTransaction": "Add payment",
+    "add": "Add",
+    "cancel": "Cancel"
 }

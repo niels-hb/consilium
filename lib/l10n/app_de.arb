@@ -18,5 +18,8 @@
     "details": "Details",
     "monthToDate": "Ausgaben seit Monatsbeginn",
     "upcomingPayments": "Nächste geplante Ausgaben",
-    "latestTransactions": "Letzte Ausgaben"
+    "latestTransactions": "Letzte Ausgaben",
+    "addTransaction": "Zahlung hinzufügen",
+    "add": "Hinzufügen",
+    "cancel": "Abbrechen"
 }
