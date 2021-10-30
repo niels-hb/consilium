@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:consilium/models/category.dart';
 import 'package:consilium/models/schedule_type.dart';
 import 'package:enum_to_string/enum_to_string.dart';
+import 'package:jiffy/jiffy.dart';
 
 class ScheduleModel {
   final int amountCents;
@@ -14,6 +15,17 @@ class ScheduleModel {
   final String uid;
   final DateTime? canceledOn;
   final String? note;
+
+  DateTime get nextPaymentOn {
+    DateTime nextPaymentOn = startedOn;
+
+    do {
+      nextPaymentOn =
+          Jiffy(nextPaymentOn).add(months: frequencyMonths).dateTime;
+    } while (nextPaymentOn.isBefore(DateTime.now()));
+
+    return nextPaymentOn;
+  }
 
   const ScheduleModel({
     required this.amountCents,
