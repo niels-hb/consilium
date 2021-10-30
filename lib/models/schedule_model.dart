@@ -61,13 +61,14 @@ class ScheduleModel {
   Map<String, Object?> toJson() => {
         'amount_cents': amountCents,
         'category': category,
-        'created_on': createdOn,
+        'created_on': Timestamp.fromDate(createdOn),
         'frequency_months': frequencyMonths,
         'name': name,
-        'started_on': startedOn,
+        'started_on': Timestamp.fromDate(startedOn),
         'type': type,
         'uid': uid,
-        'canceled_on': canceledOn,
+        'canceled_on':
+            canceledOn == null ? null : Timestamp.fromDate(canceledOn!),
         'note': note,
       };
 }

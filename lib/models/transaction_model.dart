@@ -44,7 +44,7 @@ class TransactionModel {
   Map<String, Object?> toJson() => {
         'amount_cents': amountCents,
         'category': EnumToString.convertToString(category),
-        'created_on': createdOn,
+        'created_on': Timestamp.fromDate(createdOn),
         'name': name,
         'uid': uid,
         'note': note,
