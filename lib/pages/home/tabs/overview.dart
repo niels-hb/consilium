@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:consilium/models/schedule_model.dart';
 import 'package:consilium/models/transaction_model.dart';
 import 'package:consilium/services/firebase_service.dart';
 import 'package:consilium/util/custom_theme.dart';
 import 'package:consilium/widgets/add_transaction_dialog.dart';
+import 'package:consilium/widgets/schedule_list_tile.dart';
 import 'package:consilium/widgets/transaction_list_tile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +20,7 @@ class OverviewTab extends StatelessWidget {
         const SizedBox(height: 16.0),
         const _MonthToDateCard(),
         const SizedBox(height: 16.0),
-        const _UpcomingPaymentsCard(),
+        _UpcomingPaymentsCard(),
         const SizedBox(height: 16.0),
         _LatestTransactionsCard(),
       ],
@@ -59,7 +61,11 @@ class _MonthToDateCard extends StatelessWidget {
 }
 
 class _UpcomingPaymentsCard extends StatelessWidget {
-  const _UpcomingPaymentsCard({Key? key}) : super(key: key);
+  final Query<ScheduleModel> _schedules =
+      FirebaseService.getSchedulesCollection()
+          .where('uid', isEqualTo: FirebaseAuth.instance.currentUser!.uid);
+
+  _UpcomingPaymentsCard({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +97,47 @@ class _UpcomingPaymentsCard extends StatelessWidget {
   }
 
   Widget _buildScheduleList() {
-    return const Text('TODO');
+    return StreamBuilder<QuerySnapshot<ScheduleModel>>(
+      stream: _schedules.snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return Center(
+            child: Text(snapshot.error.toString()),
+          );
+        }
+
+        if (snapshot.hasData) {
+          List<QueryDocumentSnapshot<ScheduleModel>> data = snapshot.data!.docs
+              .where((schedule) =>
+                  schedule.data().nextPaymentOn.difference(DateTime.now()) <=
+                  const Duration(days: 14))
+              .where((schedule) =>
+                  schedule.data().canceledOn?.isAfter(DateTime.now()) ?? true)
+              .toList();
+          data.sort(
+            (a, b) => b.data().nextPaymentOn.compareTo(a.data().nextPaymentOn),
+          );
+
+          if (data.isEmpty) {
+            return Center(
+              child: Text(AppLocalizations.of(context)!.emptyResultSet),
+            );
+          }
+
+          return ListView.builder(
+            shrinkWrap: true,
+            itemCount: data.length,
+            itemBuilder: (context, index) => ScheduleListTile(
+              schedule: data[index].data(),
+            ),
+          );
+        }
+
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );
   }
 }
 
