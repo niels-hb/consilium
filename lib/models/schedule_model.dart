@@ -16,6 +16,9 @@ class ScheduleModel {
   final DateTime? canceledOn;
   final String? note;
 
+  int get signedAmountCents =>
+      (type == ScheduleType.outgoing ? -1 : 1) * amountCents;
+
   DateTime get nextPaymentOn {
     DateTime nextPaymentOn = startedOn;
 
