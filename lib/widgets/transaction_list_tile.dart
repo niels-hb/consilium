@@ -1,7 +1,6 @@
-import 'package:consilium/models/category.dart';
 import 'package:consilium/models/transaction_model.dart';
+import 'package:consilium/util/custom_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 
 class TransactionListTile extends StatelessWidget {
@@ -23,7 +22,9 @@ class TransactionListTile extends StatelessWidget {
           children: [
             Row(
               children: [
-                Icon(_getIconForCategory()),
+                Icon(
+                  CustomTheme.getIconForCategory(transaction.category),
+                ),
                 const SizedBox(width: 16.0),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,33 +49,6 @@ class TransactionListTile extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  IconData _getIconForCategory() {
-    switch (transaction.category) {
-      case Category.fitness:
-        return Icons.fitness_center;
-      case Category.food:
-        return Icons.fastfood;
-      case Category.housing:
-        return Icons.house;
-      case Category.insurance:
-        return FontAwesomeIcons.umbrella;
-      case Category.medical:
-        return Icons.medication;
-      case Category.miscellaneous:
-        return Icons.miscellaneous_services;
-      case Category.hygiene:
-        return Icons.soap;
-      case Category.recreation:
-        return Icons.gamepad;
-      case Category.subscriptions:
-        return Icons.subscriptions;
-      case Category.transportation:
-        return Icons.train;
-      case Category.utilities:
-        return Icons.power;
-    }
   }
 
   void _onClick(BuildContext context) {
