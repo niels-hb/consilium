@@ -9,21 +9,23 @@ enum FirebaseCollection {
 }
 
 class FirebaseService {
-  static Query<TransactionModel> getTransactionsCollection() => getCollection(
+  static CollectionReference<TransactionModel> getTransactionsCollection() =>
+      getCollection(
         collection: FirebaseCollection.transactions,
         fromFirestore: (snapshot, _) =>
             TransactionModel.fromJson(snapshot.data()!),
         toFirestore: (transaction, _) => transaction.toJson(),
       );
 
-  static Query<ScheduleModel> getSchedulesCollection() => getCollection(
+  static CollectionReference<ScheduleModel> getSchedulesCollection() =>
+      getCollection(
         collection: FirebaseCollection.schedules,
         fromFirestore: (snapshot, _) =>
             ScheduleModel.fromJson(snapshot.data()!),
         toFirestore: (schedule, _) => schedule.toJson(),
       );
 
-  static Query<R> getCollection<R>({
+  static CollectionReference<R> getCollection<R>({
     required FirebaseCollection collection,
     required R Function(
       DocumentSnapshot<Map<String, dynamic>>,
