@@ -71,3 +71,36 @@ extension CategoryExtension on Category {
     }
   }
 }
+
+class CategoryHelper {
+  static Category? fromTranslation(
+    BuildContext context,
+    String? translation,
+  ) {
+    AppLocalizations localizations = AppLocalizations.of(context)!;
+
+    if (translation == localizations.fitness) {
+      return Category.fitness;
+    } else if (translation == localizations.food) {
+      return Category.food;
+    } else if (translation == localizations.housing) {
+      return Category.housing;
+    } else if (translation == localizations.insurance) {
+      return Category.insurance;
+    } else if (translation == localizations.medical) {
+      return Category.medical;
+    } else if (translation == localizations.miscellaneous) {
+      return Category.miscellaneous;
+    } else if (translation == localizations.hygiene) {
+      return Category.hygiene;
+    } else if (translation == localizations.recreation) {
+      return Category.recreation;
+    } else if (translation == localizations.subscriptions) {
+      return Category.subscriptions;
+    } else if (translation == localizations.transportation) {
+      return Category.transportation;
+    } else if (translation == localizations.utilities) {
+      return Category.utilities;
+    }
+  }
+}
