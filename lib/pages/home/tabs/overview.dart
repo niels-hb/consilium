@@ -9,6 +9,7 @@ import 'package:consilium/widgets/transaction_list_tile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:jiffy/jiffy.dart';
 
 class OverviewTab extends StatelessWidget {
   const OverviewTab({Key? key}) : super(key: key);
@@ -18,7 +19,7 @@ class OverviewTab extends StatelessWidget {
     return ListView(
       children: [
         const SizedBox(height: 16.0),
-        const _MonthToDateCard(),
+        _MonthToDateCard(),
         const SizedBox(height: 16.0),
         _UpcomingPaymentsCard(),
         const SizedBox(height: 16.0),
@@ -29,7 +30,18 @@ class OverviewTab extends StatelessWidget {
 }
 
 class _MonthToDateCard extends StatelessWidget {
-  const _MonthToDateCard({Key? key}) : super(key: key);
+  final Query<TransactionModel> _transactions =
+      FirebaseService.getTransactionsCollection()
+          .where('uid', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+          .where(
+            'created_on',
+            isGreaterThanOrEqualTo: Timestamp.fromDate(
+              Jiffy().startOf(Units.MONTH).dateTime,
+            ),
+          )
+          .orderBy('created_on', descending: true);
+
+  _MonthToDateCard({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -47,9 +59,34 @@ class _MonthToDateCard extends StatelessWidget {
                   style: Theme.of(context).textTheme.caption,
                 ),
                 const SizedBox(height: 8.0),
-                Text(
-                  'TODO',
-                  style: Theme.of(context).textTheme.subtitle1,
+                StreamBuilder<QuerySnapshot<TransactionModel>>(
+                  stream: _transactions.snapshots(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return Center(
+                        child: Text(snapshot.error.toString()),
+                      );
+                    }
+
+                    if (snapshot.hasData) {
+                      double sum = 0;
+
+                      for (var transaction in snapshot.data!.docs) {
+                        sum += transaction.data().amountCents;
+                      }
+
+                      return Text(
+                        CustomTheme.getDefaultNumberFormat().format(
+                          sum / 100,
+                        ),
+                        style: Theme.of(context).textTheme.subtitle1,
+                      );
+                    }
+
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  },
                 ),
               ],
             ),
