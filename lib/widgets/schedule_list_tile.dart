@@ -20,23 +20,30 @@ class ScheduleListTile extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Row(
-            children: [
-              Icon(schedule.data().category.icon()),
-              const SizedBox(width: 16.0),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(schedule.data().name),
-                  Text(
-                    CustomTheme.getDefaultDateFormat().format(
-                      schedule.data().nextPaymentOn,
-                    ),
-                    style: Theme.of(context).textTheme.caption,
+          Flexible(
+            child: Row(
+              children: [
+                Icon(schedule.data().category.icon()),
+                const SizedBox(width: 16.0),
+                Flexible(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        schedule.data().name,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      Text(
+                        CustomTheme.getDefaultDateFormat().format(
+                          schedule.data().nextPaymentOn,
+                        ),
+                        style: Theme.of(context).textTheme.caption,
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ],
+                ),
+              ],
+            ),
           ),
           Text(
             NumberFormat.currency(

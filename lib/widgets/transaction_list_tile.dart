@@ -21,23 +21,30 @@ class TransactionListTile extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Row(
-            children: [
-              Icon(transaction.data().category.icon()),
-              const SizedBox(width: 16.0),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(transaction.data().name),
-                  Text(
-                    CustomTheme.getDefaultDateFormat().format(
-                      transaction.data().createdOn,
-                    ),
-                    style: Theme.of(context).textTheme.caption,
+          Flexible(
+            child: Row(
+              children: [
+                Icon(transaction.data().category.icon()),
+                const SizedBox(width: 16.0),
+                Flexible(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        transaction.data().name,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      Text(
+                        CustomTheme.getDefaultDateFormat().format(
+                          transaction.data().createdOn,
+                        ),
+                        style: Theme.of(context).textTheme.caption,
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ],
+                ),
+              ],
+            ),
           ),
           Row(
             children: [
