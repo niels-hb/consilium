@@ -31,7 +31,9 @@ class TransactionListTile extends StatelessWidget {
                   children: [
                     Text(transaction.name),
                     Text(
-                      DateFormat('yyyy-MM-dd').format(transaction.createdOn),
+                      CustomTheme.getDefaultDateFormat().format(
+                        transaction.createdOn,
+                      ),
                       style: Theme.of(context).textTheme.caption,
                     ),
                   ],

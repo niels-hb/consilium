@@ -2,6 +2,7 @@ import 'package:consilium/models/category.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 
 class CustomTheme {
   static const double _breakpointSmall = 600;
@@ -20,6 +21,10 @@ class CustomTheme {
     } else {
       return 0.5;
     }
+  }
+
+  static DateFormat getDefaultDateFormat() {
+    return DateFormat("yyyy-MM-dd");
   }
 
   static IconData getIconForCategory(Category category) {

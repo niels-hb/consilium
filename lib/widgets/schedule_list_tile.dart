@@ -31,7 +31,9 @@ class ScheduleListTile extends StatelessWidget {
                   children: [
                     Text(schedule.name),
                     Text(
-                      DateFormat('yyyy-MM-dd').format(schedule.nextPaymentOn),
+                      CustomTheme.getDefaultDateFormat().format(
+                        schedule.nextPaymentOn,
+                      ),
                       style: Theme.of(context).textTheme.caption,
                     ),
                   ],
