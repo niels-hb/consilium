@@ -1,9 +1,47 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
+    function getCategories() {
+      return [
+        'fitness',
+        'food',
+        'housing',
+        'insurance',
+        'medical',
+        'miscellaneous',
+        'hygiene',
+        'recreation',
+        'subscriptions',
+        'transportation',
+        'utilities'
+      ];
+    }
+
+    function validateReadAuth(request, resource) {
+      return request.auth != null &&
+             request.auth.uid == resource.data.uid;
+    }
+
+    function validateWriteAuth(request) {
+      return request.auth != null &&
+             request.auth.uid == request.resource.data.uid;
+    }
+
     match /{document=**} {
-      allow read: if request.auth != null && request.auth.uid == resource.data.uid;
-      allow write: if request.auth != null && request.auth.uid == request.resource.data.uid;
+      allow read: if validateReadAuth(request, resource);
+    }
+
+    match /transactions/{document=**} {
+      function validateTransaction(data) {
+        return data != null &&
+               data.amount_cents >= 0 &&
+               data.category in getCategories() &&
+               data.created_on != null &&
+               data.name != "";
+      }
+
+      allow write: if validateWriteAuth(request) &&
+                      validateTransaction(request.resource.data);
     }
   }
 }
