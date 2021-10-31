@@ -185,11 +185,8 @@ class _SignInFormState extends State<_SignInForm> {
       obscureText: obscureText,
       keyboardType: keyboardType,
       autovalidateMode: AutovalidateMode.onUserInteraction,
-      decoration: InputDecoration(
+      decoration: CustomTheme.getDefaultInputDecoration(
         labelText: labelText,
-        border: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(8.0)),
-        ),
       ),
     );
   }

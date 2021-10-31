@@ -27,6 +27,17 @@ class CustomTheme {
     return DateFormat("yyyy-MM-dd");
   }
 
+  static InputDecoration getDefaultInputDecoration({
+    String? labelText,
+  }) {
+    return InputDecoration(
+      labelText: labelText,
+      border: const OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(8.0)),
+      ),
+    );
+  }
+
   static IconData getIconForCategory(Category category) {
     switch (category) {
       case Category.fitness:
