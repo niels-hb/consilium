@@ -73,5 +73,7 @@
     "notANumber": "Not a valid number.",
     "unsignedNumberExpected": "Number cannot be negative.",
     "edit": "Edit",
-    "editTransaction": "Edit payment"
+    "editTransaction": "Edit payment",
+    "yes": "Yes",
+    "no": "No"
 }

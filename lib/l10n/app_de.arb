@@ -43,5 +43,7 @@
     "notANumber": "Keine gültige Zahl.",
     "unsignedNumberExpected": "Zahl darf nicht negativ sein.",
     "edit": "Bearbeiten",
-    "editTransaction": "Zahlung bearbeiten"
+    "editTransaction": "Zahlung bearbeiten",
+    "yes": "Ja",
+    "no": "Nein"
 }
