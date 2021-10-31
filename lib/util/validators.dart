@@ -1,9 +1,37 @@
-enum ValidationError { emptyInput, invalidEmail, invalidPassword, weakPassword }
+enum ValidationError {
+  emptyInput,
+  invalidEmail,
+  invalidPassword,
+  weakPassword,
+  notANumber,
+  unsignedNumberExpected
+}
 
 class Validators {
   static ValidationError? required(String? string) {
     if (string == null || string.isEmpty) {
       return ValidationError.emptyInput;
+    }
+
+    return null;
+  }
+
+  static ValidationError? isDouble(
+    String? string, {
+    bool signed = true,
+  }) {
+    if (string == null || string.isEmpty) {
+      return ValidationError.emptyInput;
+    }
+
+    double? number = double.tryParse(string);
+
+    if (number == null) {
+      return ValidationError.notANumber;
+    }
+
+    if (!signed && number < 0) {
+      return ValidationError.unsignedNumberExpected;
     }
 
     return null;
