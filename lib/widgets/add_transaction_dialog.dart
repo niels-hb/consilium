@@ -35,54 +35,56 @@ class AddTransactionDialogState extends State<AddTransactionDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text(AppLocalizations.of(context)!.addTransaction),
-      content: Form(
-        key: _formKey,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextFormField(
-              controller: _createdOnController,
-              decoration: CustomTheme.getDefaultInputDecoration(
-                labelText: AppLocalizations.of(context)!.createdOn,
+      content: SingleChildScrollView(
+        child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextFormField(
+                controller: _createdOnController,
+                decoration: CustomTheme.getDefaultInputDecoration(
+                  labelText: AppLocalizations.of(context)!.createdOn,
+                ),
+                onTap: _showDatePicker,
+                readOnly: true,
               ),
-              onTap: _showDatePicker,
-              readOnly: true,
-            ),
-            const SizedBox(height: 8.0),
-            TextFormField(
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-              controller: _nameController,
-              decoration: CustomTheme.getDefaultInputDecoration(
-                labelText: AppLocalizations.of(context)!.name,
+              const SizedBox(height: 8.0),
+              TextFormField(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                controller: _nameController,
+                decoration: CustomTheme.getDefaultInputDecoration(
+                  labelText: AppLocalizations.of(context)!.name,
+                ),
+                keyboardType: TextInputType.text,
+                validator: _validateName,
               ),
-              keyboardType: TextInputType.text,
-              validator: _validateName,
-            ),
-            const SizedBox(height: 8.0),
-            _buildCategoryFormField(),
-            const SizedBox(height: 8.0),
-            TextFormField(
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-              controller: _amountController,
-              decoration: CustomTheme.getDefaultInputDecoration(
-                labelText: AppLocalizations.of(context)!.amount,
+              const SizedBox(height: 8.0),
+              _buildCategoryFormField(),
+              const SizedBox(height: 8.0),
+              TextFormField(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                controller: _amountController,
+                decoration: CustomTheme.getDefaultInputDecoration(
+                  labelText: AppLocalizations.of(context)!.amount,
+                ),
+                keyboardType: const TextInputType.numberWithOptions(
+                  signed: false,
+                  decimal: true,
+                ),
+                validator: _validateAmount,
               ),
-              keyboardType: const TextInputType.numberWithOptions(
-                signed: false,
-                decimal: true,
+              const SizedBox(height: 8.0),
+              TextFormField(
+                controller: _noteController,
+                decoration: CustomTheme.getDefaultInputDecoration(
+                  labelText: AppLocalizations.of(context)!.note,
+                ),
+                keyboardType: TextInputType.text,
+                maxLines: 4,
               ),
-              validator: _validateAmount,
-            ),
-            const SizedBox(height: 8.0),
-            TextFormField(
-              controller: _noteController,
-              decoration: CustomTheme.getDefaultInputDecoration(
-                labelText: AppLocalizations.of(context)!.note,
-              ),
-              keyboardType: TextInputType.text,
-              maxLines: 4,
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       actions: [
