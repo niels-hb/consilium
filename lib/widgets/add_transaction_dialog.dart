@@ -4,6 +4,7 @@ import 'package:consilium/models/transaction_model.dart';
 import 'package:consilium/services/firebase_service.dart';
 import 'package:consilium/util/custom_theme.dart';
 import 'package:consilium/util/validators.dart';
+import 'package:consilium/widgets/confirmation_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -139,6 +140,11 @@ class AddTransactionDialogState extends State<AddTransactionDialog> {
           onPressed: _cancel,
           child: Text(AppLocalizations.of(context)!.cancel.toUpperCase()),
         ),
+        if (widget.editMode)
+          TextButton(
+            onPressed: _active ? _delete : null,
+            child: Text(AppLocalizations.of(context)!.delete.toUpperCase()),
+          ),
         TextButton(
           onPressed: _active ? _submit : null,
           child: Text((widget.editMode
@@ -192,6 +198,41 @@ class AddTransactionDialogState extends State<AddTransactionDialog> {
   }
 
   void _cancel() {
+    Navigator.of(context).pop();
+  }
+
+  void _delete() async {
+    bool? deleteConfirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => ConfirmationDialog(
+        title: AppLocalizations.of(context)!.confirmDeleteTransaction,
+      ),
+    );
+
+    if (deleteConfirmed == null || !deleteConfirmed) {
+      return;
+    }
+
+    setState(() {
+      _active = false;
+    });
+
+    try {
+      await FirebaseService.getTransactionsCollection()
+          .doc(widget.documentSnapshot!.id)
+          .delete();
+    } on FirebaseException catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(e.message.toString()),
+        ),
+      );
+    }
+
+    setState(() {
+      _active = true;
+    });
+
     Navigator.of(context).pop();
   }
 

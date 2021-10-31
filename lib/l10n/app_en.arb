@@ -75,5 +75,7 @@
     "edit": "Edit",
     "editTransaction": "Edit payment",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "delete": "Delete",
+    "confirmDeleteTransaction": "Delete payment?"
 }

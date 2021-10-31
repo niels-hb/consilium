@@ -45,5 +45,7 @@
     "edit": "Bearbeiten",
     "editTransaction": "Zahlung bearbeiten",
     "yes": "Ja",
-    "no": "Nein"
+    "no": "Nein",
+    "delete": "Löschen",
+    "confirmDeleteTransaction": "Zahlung löschen?"
 }
