@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:consilium/models/category.dart';
 import 'package:consilium/models/transaction_model.dart';
 import 'package:consilium/util/custom_theme.dart';
+import 'package:consilium/widgets/add_transaction_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -38,14 +39,31 @@ class TransactionListTile extends StatelessWidget {
               ),
             ],
           ),
-          Text(
-            NumberFormat.currency(
-              locale: 'de',
-              symbol: '€',
-            ).format(transaction.data().amountCents / 100),
-            style: Theme.of(context).textTheme.bodyText1,
+          Row(
+            children: [
+              Text(
+                NumberFormat.currency(
+                  locale: 'de',
+                  symbol: '€',
+                ).format(transaction.data().amountCents / 100),
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+              IconButton(
+                onPressed: () => _edit(context),
+                icon: const Icon(Icons.edit),
+              ),
+            ],
           ),
         ],
+      ),
+    );
+  }
+
+  void _edit(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AddTransactionDialog(
+        documentSnapshot: transaction,
       ),
     );
   }

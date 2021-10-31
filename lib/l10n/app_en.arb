@@ -71,5 +71,7 @@
     "note": "Note",
     "invalidCategory": "Invalid category.",
     "notANumber": "Not a valid number.",
-    "unsignedNumberExpected": "Number cannot be negative."
+    "unsignedNumberExpected": "Number cannot be negative.",
+    "edit": "Edit",
+    "editTransaction": "Edit payment"
 }

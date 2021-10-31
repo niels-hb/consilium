@@ -11,7 +11,14 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 class AddTransactionDialog extends StatefulWidget {
-  const AddTransactionDialog({Key? key}) : super(key: key);
+  final bool editMode;
+  final QueryDocumentSnapshot<TransactionModel>? documentSnapshot;
+
+  const AddTransactionDialog({
+    this.documentSnapshot,
+    Key? key,
+  })  : editMode = documentSnapshot != null,
+        super(key: key);
 
   @override
   State<AddTransactionDialog> createState() => AddTransactionDialogState();
@@ -19,22 +26,62 @@ class AddTransactionDialog extends StatefulWidget {
 
 class AddTransactionDialogState extends State<AddTransactionDialog> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _amountController = TextEditingController();
+  TextEditingController? _amountController;
   Category? _category;
-  final TextEditingController _categoryController = TextEditingController();
-  DateTime _createdOn = DateTime.now();
-  final TextEditingController _createdOnController = TextEditingController(
-    text: CustomTheme.getDefaultDateFormat().format(DateTime.now()),
-  );
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _noteController = TextEditingController();
+  TextEditingController? _categoryController;
+  DateTime? _createdOn;
+  TextEditingController? _createdOnController;
+  TextEditingController? _nameController;
+  TextEditingController? _noteController;
 
   bool _active = true;
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    if (widget.editMode) {
+      _initializeWithExistingValues();
+    } else {
+      _initializeWithEmptyValues();
+    }
+  }
+
+  void _initializeWithEmptyValues() {
+    _amountController = TextEditingController();
+    _categoryController = TextEditingController();
+    _createdOn = DateTime.now();
+    _createdOnController = TextEditingController(
+      text: CustomTheme.getDefaultDateFormat().format(DateTime.now()),
+    );
+    _nameController = TextEditingController();
+    _noteController = TextEditingController();
+  }
+
+  void _initializeWithExistingValues() {
+    TransactionModel data = widget.documentSnapshot!.data();
+
+    _amountController = TextEditingController(
+      text: (data.amountCents / 100).toString(),
+    );
+    _category = data.category;
+    _categoryController = TextEditingController(
+      text: data.category.translation(context),
+    );
+    _createdOn = data.createdOn;
+    _createdOnController = TextEditingController(
+      text: CustomTheme.getDefaultDateFormat().format(data.createdOn),
+    );
+    _nameController = TextEditingController(text: data.name);
+    _noteController = TextEditingController(text: data.note);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(AppLocalizations.of(context)!.addTransaction),
+      title: Text(widget.editMode
+          ? AppLocalizations.of(context)!.editTransaction
+          : AppLocalizations.of(context)!.addTransaction),
       content: SingleChildScrollView(
         child: Form(
           key: _formKey,
@@ -90,11 +137,14 @@ class AddTransactionDialogState extends State<AddTransactionDialog> {
       actions: [
         TextButton(
           onPressed: _cancel,
-          child: Text(AppLocalizations.of(context)!.cancel),
+          child: Text(AppLocalizations.of(context)!.cancel.toUpperCase()),
         ),
         TextButton(
           onPressed: _active ? _submit : null,
-          child: Text(AppLocalizations.of(context)!.add),
+          child: Text((widget.editMode
+                  ? AppLocalizations.of(context)!.edit
+                  : AppLocalizations.of(context)!.add)
+              .toUpperCase()),
         ),
       ],
     );
@@ -108,7 +158,7 @@ class AddTransactionDialogState extends State<AddTransactionDialog> {
       ),
       onSuggestionSelected: (Category suggestion) {
         _category = suggestion;
-        _categoryController.text = suggestion.translation(context);
+        _categoryController!.text = suggestion.translation(context);
       },
       suggestionsCallback: (pattern) => Category.values.where(
         (category) => category
@@ -130,14 +180,14 @@ class AddTransactionDialogState extends State<AddTransactionDialog> {
   void _showDatePicker() async {
     DateTime? date = await showDatePicker(
       context: context,
-      initialDate: _createdOn,
+      initialDate: _createdOn!,
       firstDate: DateTime(1900),
       lastDate: DateTime(2900),
     );
 
     _createdOn = date ?? DateTime.now();
-    _createdOnController.text = CustomTheme.getDefaultDateFormat().format(
-      _createdOn,
+    _createdOnController!.text = CustomTheme.getDefaultDateFormat().format(
+      _createdOn!,
     );
   }
 
@@ -155,16 +205,22 @@ class AddTransactionDialogState extends State<AddTransactionDialog> {
     });
 
     try {
-      await FirebaseService.getTransactionsCollection().add(
-        TransactionModel(
-          amountCents: (double.parse(_amountController.text) * 100).round(),
-          category: _category ?? Category.miscellaneous,
-          createdOn: _createdOn,
-          name: _nameController.text,
-          uid: FirebaseAuth.instance.currentUser!.uid,
-          note: _noteController.text.isEmpty ? null : _noteController.text,
-        ),
+      TransactionModel data = TransactionModel(
+        amountCents: (double.parse(_amountController!.text) * 100).round(),
+        category: _category ?? Category.miscellaneous,
+        createdOn: _createdOn!,
+        name: _nameController!.text,
+        uid: FirebaseAuth.instance.currentUser!.uid,
+        note: _noteController!.text.isEmpty ? null : _noteController!.text,
       );
+
+      if (widget.editMode) {
+        await FirebaseService.getTransactionsCollection()
+            .doc(widget.documentSnapshot!.id)
+            .update(data.toJson());
+      } else {
+        await FirebaseService.getTransactionsCollection().add(data);
+      }
     } on FirebaseException catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

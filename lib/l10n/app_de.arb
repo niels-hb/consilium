@@ -41,5 +41,7 @@
     "note": "Notiz",
     "invalidCategory": "Ungültige Kategorie.",
     "notANumber": "Keine gültige Zahl.",
-    "unsignedNumberExpected": "Zahl darf nicht negativ sein."
+    "unsignedNumberExpected": "Zahl darf nicht negativ sein.",
+    "edit": "Bearbeiten",
+    "editTransaction": "Zahlung bearbeiten"
 }
