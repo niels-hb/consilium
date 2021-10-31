@@ -1,3 +1,4 @@
+import 'package:consilium/models/category.dart';
 import 'package:consilium/models/schedule_model.dart';
 import 'package:consilium/util/custom_theme.dart';
 import 'package:flutter/material.dart';
@@ -22,9 +23,7 @@ class ScheduleListTile extends StatelessWidget {
           children: [
             Row(
               children: [
-                Icon(
-                  CustomTheme.getIconForCategory(schedule.category),
-                ),
+                Icon(schedule.category.icon()),
                 const SizedBox(width: 16.0),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

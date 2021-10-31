@@ -1,3 +1,4 @@
+import 'package:consilium/models/category.dart';
 import 'package:consilium/models/transaction_model.dart';
 import 'package:consilium/util/custom_theme.dart';
 import 'package:flutter/material.dart';
@@ -22,9 +23,7 @@ class TransactionListTile extends StatelessWidget {
           children: [
             Row(
               children: [
-                Icon(
-                  CustomTheme.getIconForCategory(transaction.category),
-                ),
+                Icon(transaction.category.icon()),
                 const SizedBox(width: 16.0),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
