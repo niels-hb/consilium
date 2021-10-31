@@ -29,6 +29,7 @@ service cloud.firestore {
 
     match /{document=**} {
       allow read: if validateReadAuth(request, resource);
+      allow delete: if validateReadAuth(request, resource);
     }
 
     match /transactions/{document=**} {
