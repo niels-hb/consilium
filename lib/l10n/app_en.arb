@@ -69,5 +69,7 @@
     "category": "Category",
     "amount": "Amount (€)",
     "note": "Note",
-    "invalidCategory": "Invalid category."
+    "invalidCategory": "Invalid category.",
+    "notANumber": "Not a valid number.",
+    "unsignedNumberExpected": "Number cannot be negative."
 }

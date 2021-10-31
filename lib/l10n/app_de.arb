@@ -39,5 +39,7 @@
     "category": "Kategorie",
     "amount": "Betrag (€)",
     "note": "Notiz",
-    "invalidCategory": "Ungültige Kategorie."
+    "invalidCategory": "Ungültige Kategorie.",
+    "notANumber": "Keine gültige Zahl.",
+    "unsignedNumberExpected": "Zahl darf nicht negativ sein."
 }

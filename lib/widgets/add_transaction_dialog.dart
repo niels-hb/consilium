@@ -71,7 +71,7 @@ class AddTransactionDialogState extends State<AddTransactionDialog> {
                 signed: false,
                 decimal: true,
               ),
-              validator: _validateName,
+              validator: _validateAmount,
             ),
             const SizedBox(height: 8.0),
             TextFormField(
@@ -197,6 +197,19 @@ class AddTransactionDialogState extends State<AddTransactionDialog> {
 
     if (CategoryHelper.fromTranslation(context, category) == null) {
       return AppLocalizations.of(context)!.invalidCategory;
+    }
+  }
+
+  String? _validateAmount(String? amount) {
+    switch (Validators.isDouble(amount, signed: false)) {
+      case ValidationError.emptyInput:
+        return AppLocalizations.of(context)!.emptyInput;
+      case ValidationError.notANumber:
+        return AppLocalizations.of(context)!.notANumber;
+      case ValidationError.unsignedNumberExpected:
+        return AppLocalizations.of(context)!.unsignedNumberExpected;
+      default:
+        break;
     }
   }
 }
