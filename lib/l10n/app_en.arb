@@ -52,5 +52,16 @@
     "emptyResultSet": "No results.",
     "@emptyResultSet": {
       "description": "Displayed when a list contains no elements (e.g. when the data set is empty)."
-    }
+    },
+    "fitness": "Fitness",
+    "food": "Food",
+    "housing": "Housing",
+    "insurance": "Insurance",
+    "medical": "Medical",
+    "miscellaneous": "Miscellaneous",
+    "hygiene": "Hygiene",
+    "recreation": "Recreation & Entertainment",
+    "subscriptions": "Subscriptions",
+    "transportation": "Transportation",
+    "utilities": "Utilities"
 }

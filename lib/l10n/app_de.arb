@@ -22,5 +22,16 @@
     "addTransaction": "Zahlung hinzufügen",
     "add": "Hinzufügen",
     "cancel": "Abbrechen",
-    "emptyResultSet": "Keine Ergebnisse."
+    "emptyResultSet": "Keine Ergebnisse.",
+    "fitness": "Fitness",
+    "food": "Essen",
+    "housing": "Wohnen",
+    "insurance": "Versicherung",
+    "medical": "Gesundheit",
+    "miscellaneous": "Verschiedenes",
+    "hygiene": "Hygiene",
+    "recreation": "Freizeit & Unterhaltung",
+    "subscriptions": "Abonnements",
+    "transportation": "Transport",
+    "utilities": "Nebenkosten"
 }
