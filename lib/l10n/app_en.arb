@@ -63,5 +63,11 @@
     "recreation": "Recreation & Entertainment",
     "subscriptions": "Subscriptions",
     "transportation": "Transportation",
-    "utilities": "Utilities"
+    "utilities": "Utilities",
+    "createdOn": "Created on",
+    "name": "Name",
+    "category": "Category",
+    "amount": "Amount (€)",
+    "note": "Note",
+    "invalidCategory": "Invalid category."
 }

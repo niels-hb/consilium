@@ -33,5 +33,11 @@
     "recreation": "Freizeit & Unterhaltung",
     "subscriptions": "Abonnements",
     "transportation": "Transport",
-    "utilities": "Nebenkosten"
+    "utilities": "Nebenkosten",
+    "createdOn": "Erstellt am",
+    "name": "Name",
+    "category": "Kategorie",
+    "amount": "Betrag (€)",
+    "note": "Notiz",
+    "invalidCategory": "Ungültige Kategorie."
 }
