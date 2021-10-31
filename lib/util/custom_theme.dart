@@ -25,6 +25,13 @@ class CustomTheme {
     return DateFormat("yyyy-MM-dd");
   }
 
+  static NumberFormat getDefaultNumberFormat() {
+    return NumberFormat.currency(
+      locale: 'de',
+      symbol: '€',
+    );
+  }
+
   static InputDecoration getDefaultInputDecoration({
     String? labelText,
   }) {

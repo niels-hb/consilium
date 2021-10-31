@@ -4,7 +4,6 @@ import 'package:consilium/models/transaction_model.dart';
 import 'package:consilium/util/custom_theme.dart';
 import 'package:consilium/widgets/add_transaction_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class TransactionListTile extends StatelessWidget {
   final QueryDocumentSnapshot<TransactionModel> transaction;
@@ -49,10 +48,9 @@ class TransactionListTile extends StatelessWidget {
           Row(
             children: [
               Text(
-                NumberFormat.currency(
-                  locale: 'de',
-                  symbol: '€',
-                ).format(transaction.data().amountCents / 100),
+                CustomTheme.getDefaultNumberFormat().format(
+                  transaction.data().amountCents / 100,
+                ),
                 style: Theme.of(context).textTheme.bodyText1,
               ),
               IconButton(

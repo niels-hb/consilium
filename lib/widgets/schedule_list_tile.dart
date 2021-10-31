@@ -3,7 +3,6 @@ import 'package:consilium/models/category.dart';
 import 'package:consilium/models/schedule_model.dart';
 import 'package:consilium/util/custom_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class ScheduleListTile extends StatelessWidget {
   final QueryDocumentSnapshot<ScheduleModel> schedule;
@@ -46,10 +45,9 @@ class ScheduleListTile extends StatelessWidget {
             ),
           ),
           Text(
-            NumberFormat.currency(
-              locale: 'de',
-              symbol: '€',
-            ).format(schedule.data().signedAmountCents / 100),
+            CustomTheme.getDefaultNumberFormat().format(
+              schedule.data().signedAmountCents / 100,
+            ),
             style: Theme.of(context).textTheme.bodyText1,
           ),
         ],
