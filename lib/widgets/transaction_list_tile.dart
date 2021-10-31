@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:consilium/models/category.dart';
 import 'package:consilium/models/transaction_model.dart';
 import 'package:consilium/util/custom_theme.dart';
@@ -5,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class TransactionListTile extends StatelessWidget {
-  final TransactionModel transaction;
+  final QueryDocumentSnapshot<TransactionModel> transaction;
 
   const TransactionListTile({
     required this.transaction,
@@ -23,15 +24,15 @@ class TransactionListTile extends StatelessWidget {
           children: [
             Row(
               children: [
-                Icon(transaction.category.icon()),
+                Icon(transaction.data().category.icon()),
                 const SizedBox(width: 16.0),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(transaction.name),
+                    Text(transaction.data().name),
                     Text(
                       CustomTheme.getDefaultDateFormat().format(
-                        transaction.createdOn,
+                        transaction.data().createdOn,
                       ),
                       style: Theme.of(context).textTheme.caption,
                     ),
@@ -43,7 +44,7 @@ class TransactionListTile extends StatelessWidget {
               NumberFormat.currency(
                 locale: 'de',
                 symbol: '€',
-              ).format(transaction.amountCents / 100),
+              ).format(transaction.data().amountCents / 100),
               style: Theme.of(context).textTheme.bodyText1,
             ),
           ],

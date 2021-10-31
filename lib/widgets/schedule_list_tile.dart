@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:consilium/models/category.dart';
 import 'package:consilium/models/schedule_model.dart';
 import 'package:consilium/util/custom_theme.dart';
@@ -5,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class ScheduleListTile extends StatelessWidget {
-  final ScheduleModel schedule;
+  final QueryDocumentSnapshot<ScheduleModel> schedule;
 
   const ScheduleListTile({
     required this.schedule,
@@ -23,15 +24,15 @@ class ScheduleListTile extends StatelessWidget {
           children: [
             Row(
               children: [
-                Icon(schedule.category.icon()),
+                Icon(schedule.data().category.icon()),
                 const SizedBox(width: 16.0),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(schedule.name),
+                    Text(schedule.data().name),
                     Text(
                       CustomTheme.getDefaultDateFormat().format(
-                        schedule.nextPaymentOn,
+                        schedule.data().nextPaymentOn,
                       ),
                       style: Theme.of(context).textTheme.caption,
                     ),
@@ -43,7 +44,7 @@ class ScheduleListTile extends StatelessWidget {
               NumberFormat.currency(
                 locale: 'de',
                 symbol: '€',
-              ).format(schedule.signedAmountCents / 100),
+              ).format(schedule.data().signedAmountCents / 100),
               style: Theme.of(context).textTheme.bodyText1,
             ),
           ],

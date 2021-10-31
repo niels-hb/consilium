@@ -128,7 +128,7 @@ class _UpcomingPaymentsCard extends StatelessWidget {
             shrinkWrap: true,
             itemCount: data.length,
             itemBuilder: (context, index) => ScheduleListTile(
-              schedule: data[index].data(),
+              schedule: data[index],
             ),
           );
         }
@@ -212,7 +212,7 @@ class _LatestTransactionsCard extends StatelessWidget {
             shrinkWrap: true,
             itemCount: data.length,
             itemBuilder: (context, index) => TransactionListTile(
-              transaction: data[index].data(),
+              transaction: data[index],
             ),
           );
         }
