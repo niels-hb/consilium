@@ -162,7 +162,7 @@ class _UpcomingPaymentsCard extends StatelessWidget {
               QueryDocumentSnapshot<ScheduleModel> a,
               QueryDocumentSnapshot<ScheduleModel> b,
             ) =>
-                b.data().nextPaymentOn.compareTo(a.data().nextPaymentOn),
+                a.data().nextPaymentOn.compareTo(b.data().nextPaymentOn),
           );
 
           if (data.isEmpty) {
