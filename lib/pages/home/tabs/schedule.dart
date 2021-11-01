@@ -6,6 +6,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../models/schedule_model.dart';
 import '../../../services/firebase_service.dart';
 import '../../../util/custom_theme.dart';
+import '../../../widgets/add_schedule_dialog.dart';
 import '../../../widgets/schedule_list_tile.dart';
 
 class ScheduleTab extends StatelessWidget {
@@ -178,13 +179,7 @@ class _ScheduleListCard extends StatelessWidget {
           style: Theme.of(context).textTheme.subtitle1,
         ),
         IconButton(
-          onPressed: () {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('TODO'),
-              ),
-            );
-          },
+          onPressed: () => _addSchedule(context),
           icon: const Icon(Icons.add),
           tooltip: AppLocalizations.of(context)!.addTransaction,
         ),
@@ -206,6 +201,13 @@ class _ScheduleListCard extends StatelessWidget {
         schedule: data[index],
         compact: false,
       ),
+    );
+  }
+
+  void _addSchedule(BuildContext context) {
+    showDialog<void>(
+      context: context,
+      builder: (BuildContext context) => const AddScheduleDialog(),
     );
   }
 }

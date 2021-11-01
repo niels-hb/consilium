@@ -56,5 +56,10 @@
     "monthAbbreviated": "Mo.",
     "charts": "Diagramme",
     "summary": "Zusammenfassung",
-    "scheduledPayments": "Wiederkehrende Ausgaben"
+    "scheduledPayments": "Wiederkehrende Ausgaben",
+    "frequencyMonths": "Intervall (Monate)",
+    "addSchedule": "Wiederkehrende Zahlung hinzufügen",
+    "editSchedule": "Wiederkehrende Zahlung bearbeiten",
+    "confirmDeleteSchedule": "Wiederkehrende Zahlung löschen?",
+    "numberNotGreaterThanZero": "Zahl muss größer als 0 sein."
 }

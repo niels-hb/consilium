@@ -89,5 +89,10 @@
     },
     "charts": "Charts",
     "summary": "Summary",
-    "scheduledPayments": "Scheduled payments"
+    "scheduledPayments": "Scheduled payments",
+    "frequencyMonths": "Interval (months)",
+    "addSchedule": "Add scheduled payment",
+    "editSchedule": "Edit scheduled payment",
+    "confirmDeleteSchedule": "Delete scheduled payment?",
+    "numberNotGreaterThanZero": "Number has to be greater than 0."
 }
