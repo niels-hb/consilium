@@ -331,6 +331,14 @@ class _SummaryCard extends StatelessWidget {
   Widget _buildSummary(BuildContext context) {
     final Map<ScheduleType, double> types = getAmountPerType(data);
 
+    final int activeSchedules = data
+        .where(
+          (QueryDocumentSnapshot<ScheduleModel> snapshot) =>
+              snapshot.data().active,
+        )
+        .toList()
+        .length;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
@@ -342,6 +350,8 @@ class _SummaryCard extends StatelessWidget {
             Text(AppLocalizations.of(context)!.expenses),
             const SizedBox(height: 4.0),
             Text(AppLocalizations.of(context)!.scheduledPayments),
+            const SizedBox(height: 4.0),
+            Text(AppLocalizations.of(context)!.activeToInactiveSchedules),
           ],
         ),
         Column(
@@ -364,6 +374,8 @@ class _SummaryCard extends StatelessWidget {
             ),
             const SizedBox(height: 4.0),
             Text(data.length.toString()),
+            const SizedBox(height: 4.0),
+            Text('$activeSchedules/${data.length - activeSchedules}'),
           ],
         ),
       ],

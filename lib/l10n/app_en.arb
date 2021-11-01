@@ -96,5 +96,6 @@
     "confirmDeleteSchedule": "Delete scheduled payment?",
     "numberNotGreaterThanZero": "Number has to be greater than 0.",
     "income": "Income",
-    "expenses": "Expenses"
+    "expenses": "Expenses",
+    "activeToInactiveSchedules": "Active/Inactive"
 }

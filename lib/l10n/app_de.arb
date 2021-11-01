@@ -63,5 +63,6 @@
     "confirmDeleteSchedule": "Wiederkehrende Zahlung löschen?",
     "numberNotGreaterThanZero": "Zahl muss größer als 0 sein.",
     "income": "Einkommen",
-    "expenses": "Ausgaben"
+    "expenses": "Ausgaben",
+    "activeToInactiveSchedules": "Aktiv/Inaktiv"
 }
