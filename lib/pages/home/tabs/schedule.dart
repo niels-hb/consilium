@@ -154,7 +154,7 @@ class _ChartsCardState extends State<_ChartsCard> {
     return Column(
       children: <Widget>[
         ConstrainedBox(
-          constraints: const BoxConstraints(maxHeight: 335.0),
+          constraints: const BoxConstraints(maxHeight: 400.0),
           child: PageView(
             onPageChanged: (int page) {
               setState(() {
