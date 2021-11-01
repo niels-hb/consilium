@@ -55,7 +55,8 @@ class ScheduleTab extends StatelessWidget {
   ScheduleTab({Key? key}) : super(key: key);
 
   final Query<ScheduleModel> _schedules = getSchedulesCollection()
-      .where('uid', isEqualTo: FirebaseAuth.instance.currentUser!.uid);
+      .where('uid', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+      .orderBy('amount_cents', descending: true);
 
   @override
   Widget build(BuildContext context) {

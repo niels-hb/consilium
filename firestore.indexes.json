@@ -7,6 +7,14 @@
         { "fieldPath": "uid", "order": "ASCENDING" },
         { "fieldPath": "created_on", "order": "DESCENDING" }
       ]
+    },
+    {
+      "collectionGroup": "schedules",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "uid", "order": "ASCENDING" },
+        { "fieldPath": "amount_cents", "order": "DESCENDING" }
+      ]
     }
   ],
   "fieldOverrides": []
