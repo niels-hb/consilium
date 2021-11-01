@@ -21,7 +21,7 @@ double _getWidthMultiplier(BuildContext context) {
 }
 
 DateFormat getDefaultDateFormat() {
-  return DateFormat('yyyy-MM-dd');
+  return DateFormat.yMd('de');
 }
 
 NumberFormat getDefaultNumberFormat() {
