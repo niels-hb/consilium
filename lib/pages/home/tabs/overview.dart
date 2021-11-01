@@ -77,13 +77,11 @@ class _MonthToDateCard extends StatelessWidget {
                       for (final QueryDocumentSnapshot<
                               TransactionModel> transaction
                           in snapshot.data!.docs) {
-                        sum += transaction.data().amountCents;
+                        sum += transaction.data().amount;
                       }
 
                       return Text(
-                        getDefaultNumberFormat().format(
-                          sum / 100,
-                        ),
+                        getDefaultNumberFormat().format(sum),
                         style: Theme.of(context).textTheme.subtitle1,
                       );
                     }

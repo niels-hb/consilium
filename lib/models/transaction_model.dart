@@ -5,7 +5,7 @@ import 'category.dart';
 
 class TransactionModel {
   const TransactionModel({
-    required this.amountCents,
+    required this.amount,
     required this.category,
     required this.createdOn,
     required this.name,
@@ -16,10 +16,11 @@ class TransactionModel {
 
   TransactionModel.fromJson(Map<String, Object?> json)
       : this(
-          amountCents: int.tryParse(
-                json['amount_cents'].toString(),
-              ) ??
-              -1,
+          amount: (int.tryParse(
+                    json['amount_cents'].toString(),
+                  ) ??
+                  -1) /
+              100,
           category: EnumToString.fromString(
                 Category.values,
                 json['category'].toString(),
@@ -35,7 +36,7 @@ class TransactionModel {
                   as DocumentReference<Map<String, dynamic>>,
         );
 
-  final int amountCents;
+  final double amount;
   final Category category;
   final DateTime createdOn;
   final String name;
@@ -44,7 +45,7 @@ class TransactionModel {
   final DocumentReference<Map<String, dynamic>>? linkedSchedule;
 
   Map<String, Object?> toJson() => <String, Object?>{
-        'amount_cents': amountCents,
+        'amount_cents': (amount * 100).round(),
         'category': EnumToString.convertToString(category),
         'created_on': Timestamp.fromDate(createdOn),
         'name': name,

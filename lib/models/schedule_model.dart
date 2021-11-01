@@ -7,7 +7,7 @@ import 'schedule_type.dart';
 
 class ScheduleModel {
   const ScheduleModel({
-    required this.amountCents,
+    required this.amount,
     required this.category,
     required this.createdOn,
     required this.frequencyMonths,
@@ -21,10 +21,11 @@ class ScheduleModel {
 
   ScheduleModel.fromJson(Map<String, Object?> json)
       : this(
-          amountCents: int.tryParse(
-                json['amount_cents'].toString(),
-              ) ??
-              -1,
+          amount: (int.tryParse(
+                    json['amount_cents'].toString(),
+                  ) ??
+                  -1) /
+              100,
           category: EnumToString.fromString(
                 Category.values,
                 json['category'].toString(),
@@ -49,7 +50,7 @@ class ScheduleModel {
           note: json['note']?.toString(),
         );
 
-  final int amountCents;
+  final double amount;
   final Category category;
   final DateTime createdOn;
   final int frequencyMonths;
@@ -60,12 +61,11 @@ class ScheduleModel {
   final DateTime? canceledOn;
   final String? note;
 
-  int get signedAmountCents =>
-      (type == ScheduleType.outgoing ? -1 : 1) * amountCents;
+  double get signedAmount => (type == ScheduleType.outgoing ? -1 : 1) * amount;
 
-  double get monthlyAmountCents => amountCents / frequencyMonths;
+  double get monthlyAmount => amount / frequencyMonths;
 
-  double get signedMonthlyAmountCents => signedAmountCents / frequencyMonths;
+  double get signedMonthlyAmount => signedAmount / frequencyMonths;
 
   DateTime get nextPaymentOn {
     DateTime nextPaymentOn = startedOn;
@@ -79,7 +79,7 @@ class ScheduleModel {
   }
 
   Map<String, Object?> toJson() => <String, Object?>{
-        'amount_cents': amountCents,
+        'amount_cents': (amount * 100).round(),
         'category': category,
         'created_on': Timestamp.fromDate(createdOn),
         'frequency_months': frequencyMonths,

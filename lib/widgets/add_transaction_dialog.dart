@@ -64,7 +64,7 @@ class AddTransactionDialogState extends State<AddTransactionDialog> {
     final TransactionModel data = widget.documentSnapshot!.data();
 
     _amountController = TextEditingController(
-      text: (data.amountCents / 100).toString(),
+      text: data.amount.toString(),
     );
     _category = data.category;
     _categoryController = TextEditingController(
@@ -250,7 +250,7 @@ class AddTransactionDialogState extends State<AddTransactionDialog> {
 
     try {
       final TransactionModel data = TransactionModel(
-        amountCents: (double.parse(_amountController!.text) * 100).round(),
+        amount: double.parse(_amountController!.text),
         category: _category ?? Category.miscellaneous,
         createdOn: _createdOn!,
         name: _nameController!.text,

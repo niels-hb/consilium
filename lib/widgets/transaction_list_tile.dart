@@ -51,7 +51,7 @@ class TransactionListTile extends StatelessWidget {
             children: <Widget>[
               Text(
                 getDefaultNumberFormat().format(
-                  transaction.data().amountCents / 100,
+                  transaction.data().amount,
                 ),
                 style: Theme.of(context).textTheme.bodyText1,
               ),

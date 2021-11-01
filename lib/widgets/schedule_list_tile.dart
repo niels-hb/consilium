@@ -83,14 +83,14 @@ class ScheduleListTile extends StatelessWidget {
             children: <Widget>[
               _buildAmountText(
                 context,
-                amount: data.signedAmountCents / 100,
+                amount: data.signedAmount,
                 interval: data.frequencyMonths,
               ),
               if (!compact) ...<Widget>[
                 const SizedBox(height: 4.0),
                 _buildAmountText(
                   context,
-                  amount: data.signedMonthlyAmountCents / 100,
+                  amount: data.signedMonthlyAmount,
                 ),
               ]
             ],
