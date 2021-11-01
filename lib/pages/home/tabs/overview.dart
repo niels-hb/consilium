@@ -25,6 +25,7 @@ class OverviewTab extends StatelessWidget {
         _UpcomingPaymentsCard(),
         const SizedBox(height: 16.0),
         _LatestTransactionsCard(),
+        const SizedBox(height: 16.0),
       ],
     );
   }

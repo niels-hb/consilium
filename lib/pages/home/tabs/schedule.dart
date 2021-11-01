@@ -89,6 +89,7 @@ class ScheduleTab extends StatelessWidget {
               _ScheduleListCard(
                 data: snapshot.data!.docs,
               ),
+              const SizedBox(height: 16.0),
             ],
           );
         }
