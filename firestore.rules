@@ -17,6 +17,13 @@ service cloud.firestore {
       ];
     }
 
+    function getScheduleTypes() {
+      return [
+        'outgoing',
+        'incoming'
+      ];
+    }
+
     function validateReadAuth(request, resource) {
       return request.auth != null &&
              request.auth.uid == resource.data.uid;
@@ -43,6 +50,22 @@ service cloud.firestore {
 
       allow write: if validateWriteAuth(request) &&
                       validateTransaction(request.resource.data);
+    }
+
+    match /schedules/{document=**} {
+      function validateSchedule(data) {
+        return data != null &&
+               data.amount_cents > 0 &&
+               data.category in getCategories() &&
+               data.created_on != null &&
+               data.frequency_months > 0 &&
+               data.name != "" &&
+               data.started_on != null &&
+               data.type in getScheduleTypes();
+      }
+
+      allow write: if validateWriteAuth(request) &&
+                      validateSchedule(request.resource.data);
     }
   }
 }
