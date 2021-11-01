@@ -63,6 +63,10 @@ class ScheduleModel {
   int get signedAmountCents =>
       (type == ScheduleType.outgoing ? -1 : 1) * amountCents;
 
+  double get monthlyAmountCents => amountCents / frequencyMonths;
+
+  double get signedMonthlyAmountCents => signedAmountCents / frequencyMonths;
+
   DateTime get nextPaymentOn {
     DateTime nextPaymentOn = startedOn;
 
