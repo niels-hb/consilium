@@ -91,7 +91,7 @@ class _LoggedInPageState extends State<_LoggedInPage> {
           ),
         ),
         _TabDefinition(
-          content: const ScheduleTab(),
+          content: ScheduleTab(),
           bottomNavigationBarItem: BottomNavigationBarItem(
             icon: const Icon(Icons.schedule),
             label: AppLocalizations.of(context)!.schedule,

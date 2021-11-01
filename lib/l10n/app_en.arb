@@ -86,5 +86,8 @@
     "monthAbbreviated": "mo.",
     "@monthAbbreviated": {
       "description": "Abbreviated version of 'month'. Shown in the schedule list tile."
-    }
+    },
+    "charts": "Charts",
+    "summary": "Summary",
+    "scheduledPayments": "Scheduled payments"
 }

@@ -17,7 +17,7 @@
     "schedule": "Plan",
     "details": "Details",
     "monthToDate": "Ausgaben seit Monatsbeginn",
-    "upcomingPayments": "Nächste geplante Ausgaben",
+    "upcomingPayments": "Nächste wiederkehrende Ausgaben",
     "latestTransactions": "Letzte Ausgaben",
     "addTransaction": "Zahlung hinzufügen",
     "add": "Hinzufügen",
@@ -53,5 +53,8 @@
     "createdOn": "Erstellt am",
     "startedOn": "Gestartet am",
     "canceledOn": "Gekündigt am",
-    "monthAbbreviated": "Mo."
+    "monthAbbreviated": "Mo.",
+    "charts": "Diagramme",
+    "summary": "Zusammenfassung",
+    "scheduledPayments": "Wiederkehrende Ausgaben"
 }
