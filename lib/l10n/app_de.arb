@@ -61,5 +61,7 @@
     "addSchedule": "Wiederkehrende Zahlung hinzufügen",
     "editSchedule": "Wiederkehrende Zahlung bearbeiten",
     "confirmDeleteSchedule": "Wiederkehrende Zahlung löschen?",
-    "numberNotGreaterThanZero": "Zahl muss größer als 0 sein."
+    "numberNotGreaterThanZero": "Zahl muss größer als 0 sein.",
+    "income": "Einkommen",
+    "expenses": "Ausgaben"
 }

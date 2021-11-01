@@ -3,11 +3,53 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../../models/category.dart';
 import '../../../models/schedule_model.dart';
+import '../../../models/schedule_type.dart';
 import '../../../services/firebase_service.dart';
 import '../../../util/custom_theme.dart';
 import '../../../widgets/add_schedule_dialog.dart';
 import '../../../widgets/schedule_list_tile.dart';
+
+Map<Category, double> getAmountPerCategory(
+  List<QueryDocumentSnapshot<ScheduleModel>> data,
+) {
+  final Map<Category, double> categories = <Category, double>{};
+
+  data
+      .where(
+        (QueryDocumentSnapshot<ScheduleModel> snapshot) =>
+            snapshot.data().type == ScheduleType.outgoing,
+      )
+      .map((QueryDocumentSnapshot<ScheduleModel> snaphot) => snaphot.data())
+      .forEach((ScheduleModel schedule) {
+    categories.update(
+      schedule.category,
+      (double value) => value += schedule.monthlyAmount,
+      ifAbsent: () => schedule.monthlyAmount,
+    );
+  });
+
+  return categories;
+}
+
+Map<ScheduleType, double> getAmountPerType(
+  List<QueryDocumentSnapshot<ScheduleModel>> data,
+) {
+  final Map<ScheduleType, double> types = <ScheduleType, double>{};
+
+  data
+      .map((QueryDocumentSnapshot<ScheduleModel> snaphot) => snaphot.data())
+      .forEach((ScheduleModel schedule) {
+    types.update(
+      schedule.type,
+      (double value) => value += schedule.monthlyAmount,
+      ifAbsent: () => schedule.monthlyAmount,
+    );
+  });
+
+  return types;
+}
 
 class ScheduleTab extends StatelessWidget {
   ScheduleTab({Key? key}) : super(key: key);
@@ -119,7 +161,8 @@ class _SummaryCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 _buildHeader(context),
-                _buildSummary(),
+                const SizedBox(height: 8.0),
+                _buildSummary(context),
               ],
             ),
           ),
@@ -135,8 +178,46 @@ class _SummaryCard extends StatelessWidget {
     );
   }
 
-  Widget _buildSummary() {
-    return const Text('TODO');
+  Widget _buildSummary(BuildContext context) {
+    final Map<ScheduleType, double> types = getAmountPerType(data);
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(AppLocalizations.of(context)!.income),
+            const SizedBox(height: 4.0),
+            Text(AppLocalizations.of(context)!.expenses),
+            const SizedBox(height: 4.0),
+            Text(AppLocalizations.of(context)!.scheduledPayments),
+          ],
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: <Widget>[
+            Text(
+              getDefaultNumberFormat().format(
+                types.containsKey(ScheduleType.incoming)
+                    ? types[ScheduleType.incoming]
+                    : 0,
+              ),
+            ),
+            const SizedBox(height: 4.0),
+            Text(
+              getDefaultNumberFormat().format(
+                types.containsKey(ScheduleType.outgoing)
+                    ? types[ScheduleType.outgoing]
+                    : 0,
+              ),
+            ),
+            const SizedBox(height: 4.0),
+            Text(data.length.toString()),
+          ],
+        ),
+      ],
+    );
   }
 }
 
