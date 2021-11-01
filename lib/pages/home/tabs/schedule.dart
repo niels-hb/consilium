@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:intl/intl.dart';
 
 import '../../../models/category.dart';
 import '../../../models/schedule_model.dart';
@@ -99,13 +101,25 @@ class ScheduleTab extends StatelessWidget {
   }
 }
 
-class _ChartsCard extends StatelessWidget {
+class _ChartsCard extends StatefulWidget {
   const _ChartsCard({
     required this.data,
     Key? key,
   }) : super(key: key);
 
   final List<QueryDocumentSnapshot<ScheduleModel>> data;
+
+  @override
+  State<_ChartsCard> createState() => _ChartsCardState();
+}
+
+class _ChartsCardState extends State<_ChartsCard> {
+  int _currentPage = 0;
+
+  List<Widget> get _pages => <Widget>[
+        _pieChartByCategory(),
+        _pieChartByType(),
+      ];
 
   @override
   Widget build(BuildContext context) {
@@ -137,7 +151,142 @@ class _ChartsCard extends StatelessWidget {
   }
 
   Widget _buildCharts() {
-    return const Text('TODO');
+    return Column(
+      children: <Widget>[
+        ConstrainedBox(
+          constraints: const BoxConstraints(maxHeight: 335.0),
+          child: PageView(
+            onPageChanged: (int page) {
+              setState(() {
+                _currentPage = page;
+              });
+            },
+            children: _pages,
+          ),
+        ),
+        ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 25.0),
+          child: _PageViewIndicator(
+            page: _currentPage,
+            totalPages: _pages.length,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _pieChartByCategory() {
+    final Map<Category, double> categories = getAmountPerCategory(widget.data);
+
+    if (categories.isEmpty) {
+      return Center(
+        child: Text(AppLocalizations.of(context)!.emptyResultSet),
+      );
+    }
+
+    return PieChart(
+      PieChartData(
+        centerSpaceRadius: 0,
+        sections: <PieChartSectionData>[
+          for (MapEntry<Category, double> mapEntry in categories.entries)
+            PieChartSectionData(
+              value: mapEntry.value,
+              title: getDefaultNumberFormat().format(mapEntry.value),
+              radius: 160.0,
+              color: mapEntry.key.color(),
+              badgeWidget: DecoratedBox(
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white,
+                  boxShadow: <BoxShadow>[
+                    BoxShadow(blurRadius: 4.0),
+                  ],
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Icon(mapEntry.key.icon()),
+                ),
+              ),
+              badgePositionPercentageOffset: 1.0,
+            ),
+        ],
+      ),
+    );
+  }
+
+  Widget _pieChartByType() {
+    final Map<ScheduleType, double> types = getAmountPerType(widget.data);
+
+    if (types.isEmpty) {
+      return Center(
+        child: Text(AppLocalizations.of(context)!.emptyResultSet),
+      );
+    }
+
+    final double sum = (types[ScheduleType.incoming] ?? 0) +
+        (types[ScheduleType.outgoing] ?? 0);
+
+    return PieChart(
+      PieChartData(
+        centerSpaceRadius: 0,
+        sections: <PieChartSectionData>[
+          _getPieChartSectionDataForType(
+            value: types[ScheduleType.incoming] ?? 0,
+            sum: sum,
+            color: Colors.green,
+          ),
+          _getPieChartSectionDataForType(
+            value: types[ScheduleType.outgoing] ?? 0,
+            sum: sum,
+            color: Colors.orange,
+          ),
+        ],
+      ),
+    );
+  }
+
+  PieChartSectionData _getPieChartSectionDataForType({
+    required double value,
+    required double sum,
+    required Color color,
+  }) =>
+      PieChartSectionData(
+        value: value,
+        title:
+            '${NumberFormat.percentPattern().format(value / sum)} (${getDefaultNumberFormat().format(value)})',
+        radius: 160.0,
+        color: color,
+      );
+}
+
+class _PageViewIndicator extends StatelessWidget {
+  const _PageViewIndicator({
+    required this.page,
+    required this.totalPages,
+  });
+
+  final int page;
+  final int totalPages;
+
+  double get _radius => 8.0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        for (int i = 0; i < totalPages; i++)
+          Container(
+            width: _radius,
+            height: _radius,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: page == i ? Colors.black : Colors.transparent,
+              border: Border.all(),
+            ),
+          ),
+      ],
+    );
   }
 }
 
