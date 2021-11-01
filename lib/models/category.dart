@@ -70,6 +70,33 @@ extension CategoryExtension on Category {
         return Icons.power;
     }
   }
+
+  Color color() {
+    switch (this) {
+      case Category.fitness:
+        return Colors.pink;
+      case Category.food:
+        return Colors.green;
+      case Category.housing:
+        return Colors.brown;
+      case Category.insurance:
+        return Colors.lime;
+      case Category.medical:
+        return Colors.red;
+      case Category.miscellaneous:
+        return Colors.blue;
+      case Category.hygiene:
+        return Colors.cyan;
+      case Category.recreation:
+        return Colors.teal;
+      case Category.subscriptions:
+        return Colors.amber;
+      case Category.transportation:
+        return Colors.orange;
+      case Category.utilities:
+        return Colors.yellow;
+    }
+  }
 }
 
 Category? categoryFromTranslation(
