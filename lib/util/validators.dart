@@ -4,7 +4,8 @@ enum ValidationError {
   invalidPassword,
   weakPassword,
   notANumber,
-  unsignedNumberExpected
+  unsignedNumberExpected,
+  numberLessThanMin,
 }
 
 ValidationError? validateRequired(String? string) {
@@ -17,6 +18,7 @@ ValidationError? validateRequired(String? string) {
 
 ValidationError? validateDouble(
   String? string, {
+  double? min,
   bool signed = true,
 }) {
   if (string == null || string.isEmpty) {
@@ -31,6 +33,36 @@ ValidationError? validateDouble(
 
   if (!signed && number < 0) {
     return ValidationError.unsignedNumberExpected;
+  }
+
+  if (min != null && number.abs() < min) {
+    return ValidationError.numberLessThanMin;
+  }
+
+  return null;
+}
+
+ValidationError? validateInt(
+  String? string, {
+  int? min,
+  bool signed = true,
+}) {
+  if (string == null || string.isEmpty) {
+    return ValidationError.emptyInput;
+  }
+
+  final int? number = int.tryParse(string);
+
+  if (number == null) {
+    return ValidationError.notANumber;
+  }
+
+  if (!signed && number < 0) {
+    return ValidationError.unsignedNumberExpected;
+  }
+
+  if (min != null && number.abs() < min) {
+    return ValidationError.numberLessThanMin;
   }
 
   return null;
