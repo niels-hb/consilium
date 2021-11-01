@@ -11,7 +11,6 @@ class TransactionModel {
     required this.name,
     required this.uid,
     this.note,
-    this.linkedSchedule,
   });
 
   TransactionModel.fromJson(Map<String, Object?> json)
@@ -30,10 +29,6 @@ class TransactionModel {
           name: json['name'].toString(),
           uid: json['uid'].toString(),
           note: json['note']?.toString(),
-          linkedSchedule: json['linked_schedule'] == null
-              ? null
-              : json['linked_schedule']!
-                  as DocumentReference<Map<String, dynamic>>,
         );
 
   final double amount;
@@ -42,7 +37,6 @@ class TransactionModel {
   final String name;
   final String uid;
   final String? note;
-  final DocumentReference<Map<String, dynamic>>? linkedSchedule;
 
   Map<String, Object?> toJson() => <String, Object?>{
         'amount_cents': (amount * 100).round(),
@@ -51,7 +45,5 @@ class TransactionModel {
         'name': name,
         'uid': uid,
         'note': note,
-        'linked_schedule':
-            linkedSchedule == null ? null : 'schedules/${linkedSchedule!.id}',
       };
 }
