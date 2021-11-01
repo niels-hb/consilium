@@ -61,6 +61,8 @@ class ScheduleModel {
   final DateTime? canceledOn;
   final String? note;
 
+  bool get active => canceledOn?.isAfter(DateTime.now()) ?? true;
+
   double get signedAmount => (type == ScheduleType.outgoing ? -1 : 1) * amount;
 
   double get monthlyAmount => amount / frequencyMonths;

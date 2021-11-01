@@ -155,7 +155,7 @@ class _UpcomingPaymentsCard extends StatelessWidget {
                   schedule.data().nextPaymentOn.difference(DateTime.now()) <=
                   const Duration(days: 14))
               .where((QueryDocumentSnapshot<ScheduleModel> schedule) =>
-                  schedule.data().canceledOn?.isAfter(DateTime.now()) ?? true)
+                  schedule.data().active)
               .toList();
           data.sort(
             (
