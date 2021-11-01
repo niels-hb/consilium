@@ -80,12 +80,12 @@ class ScheduleModel {
 
   Map<String, Object?> toJson() => <String, Object?>{
         'amount_cents': (amount * 100).round(),
-        'category': category,
+        'category': EnumToString.convertToString(category),
         'created_on': Timestamp.fromDate(createdOn),
         'frequency_months': frequencyMonths,
         'name': name,
         'started_on': Timestamp.fromDate(startedOn),
-        'type': type,
+        'type': EnumToString.convertToString(type),
         'uid': uid,
         'canceled_on':
             canceledOn == null ? null : Timestamp.fromDate(canceledOn!),
