@@ -1,16 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:consilium/models/category.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 
-class TransactionModel {
-  final int amountCents;
-  final Category category;
-  final DateTime createdOn;
-  final String name;
-  final String uid;
-  final String? note;
-  final DocumentReference? linkedSchedule;
+import 'category.dart';
 
+class TransactionModel {
   const TransactionModel({
     required this.amountCents,
     required this.category,
@@ -32,16 +25,25 @@ class TransactionModel {
                 json['category'].toString(),
               ) ??
               Category.miscellaneous,
-          createdOn: (json['created_on'] as Timestamp).toDate(),
+          createdOn: (json['created_on']! as Timestamp).toDate(),
           name: json['name'].toString(),
           uid: json['uid'].toString(),
           note: json['note']?.toString(),
           linkedSchedule: json['linked_schedule'] == null
               ? null
-              : json['linked_schedule'] as DocumentReference,
+              : json['linked_schedule']!
+                  as DocumentReference<Map<String, dynamic>>,
         );
 
-  Map<String, Object?> toJson() => {
+  final int amountCents;
+  final Category category;
+  final DateTime createdOn;
+  final String name;
+  final String uid;
+  final String? note;
+  final DocumentReference<Map<String, dynamic>>? linkedSchedule;
+
+  Map<String, Object?> toJson() => <String, Object?>{
         'amount_cents': amountCents,
         'category': EnumToString.convertToString(category),
         'created_on': Timestamp.fromDate(createdOn),

@@ -1,15 +1,18 @@
-import 'package:consilium/pages/home/page.dart';
-import 'package:consilium/util/custom_theme.dart';
-import 'package:consilium/util/validators.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+// ignore: implementation_imports
+import 'package:firebase_auth_platform_interface/src/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class LoginPage extends StatelessWidget {
-  static const String route = '/login';
+import '../../util/custom_theme.dart';
+import '../../util/validators.dart';
+import '../home/page.dart';
 
+class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
+
+  static const String route = '/login';
 
   @override
   Widget build(BuildContext context) {
@@ -20,11 +23,11 @@ class LoginPage extends StatelessWidget {
       body: Center(
         child: ConstrainedBox(
           constraints: BoxConstraints(
-            maxWidth: CustomTheme.getMaxWidth(context),
+            maxWidth: getMaxWidth(context),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            children: [
+            children: <Widget>[
               _buildAuthProviderRow(context),
               const SizedBox(height: 16.0),
               _buildDivider(context),
@@ -40,7 +43,7 @@ class LoginPage extends StatelessWidget {
   Row _buildAuthProviderRow(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
+      children: <Widget>[
         _AuthProviderButton(
           authProvider: GoogleAuthProvider(),
           icon: FontAwesomeIcons.google,
@@ -72,15 +75,15 @@ class LoginPage extends StatelessWidget {
 }
 
 class _AuthProviderButton extends StatefulWidget {
-  final dynamic authProvider;
-  final IconData icon;
-  final String tooltip;
-
   const _AuthProviderButton({
     required this.authProvider,
     required this.icon,
     required this.tooltip,
   });
+
+  final AuthProvider authProvider;
+  final IconData icon;
+  final String tooltip;
 
   @override
   State<_AuthProviderButton> createState() => _AuthProviderButtonState();
@@ -98,7 +101,7 @@ class _AuthProviderButtonState extends State<_AuthProviderButton> {
     );
   }
 
-  void _startAuth() async {
+  Future<void> _startAuth() async {
     setState(() {
       _active = false;
     });
@@ -106,7 +109,9 @@ class _AuthProviderButtonState extends State<_AuthProviderButton> {
     try {
       await FirebaseAuth.instance.signInWithPopup(widget.authProvider);
 
-      Navigator.of(context).pushReplacementNamed(HomePage.route);
+      if (mounted) {
+        Navigator.of(context).pushReplacementNamed(HomePage.route);
+      }
     } on FirebaseAuthException catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -129,9 +134,9 @@ class _SignInForm extends StatefulWidget {
 }
 
 class _SignInFormState extends State<_SignInForm> {
-  final _formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   bool _active = true;
 
@@ -141,7 +146,7 @@ class _SignInFormState extends State<_SignInForm> {
       key: _formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
+        children: <Widget>[
           _buildTextFormField(
             controller: _emailController,
             keyboardType: TextInputType.emailAddress,
@@ -185,13 +190,13 @@ class _SignInFormState extends State<_SignInForm> {
       obscureText: obscureText,
       keyboardType: keyboardType,
       autovalidateMode: AutovalidateMode.onUserInteraction,
-      decoration: CustomTheme.getDefaultInputDecoration(
+      decoration: getDefaultInputDecoration(
         labelText: labelText,
       ),
     );
   }
 
-  void _submit() async {
+  Future<void> _submit() async {
     if (!_formKey.currentState!.validate()) {
       return;
     }
@@ -204,7 +209,7 @@ class _SignInFormState extends State<_SignInForm> {
       FirebaseAuthException? loginResult = await _attemptLogin();
 
       if (loginResult != null && loginResult.code == 'user-not-found') {
-        FirebaseAuthException? registrationResult =
+        final FirebaseAuthException? registrationResult =
             await _attemptRegistration();
 
         if (registrationResult == null) {
@@ -215,7 +220,9 @@ class _SignInFormState extends State<_SignInForm> {
       }
 
       if (loginResult == null) {
-        Navigator.of(context).pop();
+        if (mounted) {
+          Navigator.of(context).pop();
+        }
       } else {
         throw loginResult;
       }
@@ -261,7 +268,7 @@ class _SignInFormState extends State<_SignInForm> {
   }
 
   String? _validateEmail(String? email) {
-    switch (Validators.email(email)) {
+    switch (validateEmail(email)) {
       case ValidationError.emptyInput:
         return AppLocalizations.of(context)!.emptyInput;
       case ValidationError.invalidEmail:
@@ -272,7 +279,7 @@ class _SignInFormState extends State<_SignInForm> {
   }
 
   String? _validatePassword(String? password) {
-    switch (Validators.password(password)) {
+    switch (validatePassword(password)) {
       case ValidationError.emptyInput:
         return AppLocalizations.of(context)!.emptyInput;
       case ValidationError.invalidPassword:

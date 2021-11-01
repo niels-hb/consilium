@@ -1,11 +1,12 @@
-import 'package:consilium/pages/home/page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-class SplashPage extends StatefulWidget {
-  static const String route = '/';
+import '../home/page.dart';
 
+class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);
+
+  static const String route = '/';
 
   @override
   State<SplashPage> createState() => _SplashPageState();
@@ -22,7 +23,9 @@ class _SplashPageState extends State<SplashPage> {
   Future<void> _bootstrap() async {
     await Firebase.initializeApp();
 
-    Navigator.of(context).pushReplacementNamed(HomePage.route);
+    if (mounted) {
+      Navigator.of(context).pushReplacementNamed(HomePage.route);
+    }
   }
 
   @override

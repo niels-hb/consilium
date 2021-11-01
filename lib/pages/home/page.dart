@@ -1,23 +1,33 @@
-import 'package:consilium/pages/home/tab_definition.dart';
-import 'package:consilium/pages/home/tabs/details.dart';
-import 'package:consilium/pages/home/tabs/overview.dart';
-import 'package:consilium/pages/home/tabs/schedule.dart';
-import 'package:consilium/pages/login/page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class HomePage extends StatelessWidget {
-  static const String route = '/home';
+import '../login/page.dart';
+import 'tabs/details.dart';
+import 'tabs/overview.dart';
+import 'tabs/schedule.dart';
 
+class _TabDefinition {
+  const _TabDefinition({
+    required this.content,
+    required this.bottomNavigationBarItem,
+  });
+
+  final Widget content;
+  final BottomNavigationBarItem bottomNavigationBarItem;
+}
+
+class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
+
+  static const String route = '/home';
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<User?>(
       stream: FirebaseAuth.instance.authStateChanges(),
-      builder: (context, snapshot) {
+      builder: (BuildContext context, AsyncSnapshot<User?> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Scaffold(
             appBar: AppBar(
@@ -72,22 +82,22 @@ class _LoggedInPage extends StatefulWidget {
 class _LoggedInPageState extends State<_LoggedInPage> {
   int _currentTab = 0;
 
-  List<TabDefinition> get _tabs => [
-        TabDefinition(
+  List<_TabDefinition> get _tabs => <_TabDefinition>[
+        _TabDefinition(
           content: const OverviewTab(),
           bottomNavigationBarItem: BottomNavigationBarItem(
             icon: const Icon(Icons.dashboard),
             label: AppLocalizations.of(context)!.overview,
           ),
         ),
-        TabDefinition(
+        _TabDefinition(
           content: const ScheduleTab(),
           bottomNavigationBarItem: BottomNavigationBarItem(
             icon: const Icon(Icons.schedule),
             label: AppLocalizations.of(context)!.schedule,
           ),
         ),
-        TabDefinition(
+        _TabDefinition(
           content: const DetailsTab(),
           bottomNavigationBarItem: BottomNavigationBarItem(
             icon: const Icon(FontAwesomeIcons.chartArea),
@@ -101,7 +111,7 @@ class _LoggedInPageState extends State<_LoggedInPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.appName),
-        actions: [
+        actions: <Widget>[
           IconButton(
             onPressed: _signOut,
             icon: const Icon(Icons.logout),
@@ -111,8 +121,10 @@ class _LoggedInPageState extends State<_LoggedInPage> {
       body: _tabs[_currentTab].content,
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentTab,
-        items: _tabs.map((tab) => tab.bottomNavigationBarItem).toList(),
-        onTap: (index) {
+        items: _tabs
+            .map((_TabDefinition tab) => tab.bottomNavigationBarItem)
+            .toList(),
+        onTap: (int index) {
           setState(() {
             _currentTab = index;
           });
@@ -121,7 +133,7 @@ class _LoggedInPageState extends State<_LoggedInPage> {
     );
   }
 
-  void _signOut() async {
+  Future<void> _signOut() async {
     FirebaseAuth.instance.signOut();
     Navigator.of(context).pushNamed(LoginPage.route);
   }

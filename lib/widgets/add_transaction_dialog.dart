@@ -1,36 +1,37 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:consilium/models/category.dart';
-import 'package:consilium/models/transaction_model.dart';
-import 'package:consilium/services/firebase_service.dart';
-import 'package:consilium/util/custom_theme.dart';
-import 'package:consilium/util/validators.dart';
-import 'package:consilium/widgets/confirmation_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
-class AddTransactionDialog extends StatefulWidget {
-  final bool editMode;
-  final QueryDocumentSnapshot<TransactionModel>? documentSnapshot;
+import '../models/category.dart';
+import '../models/transaction_model.dart';
+import '../services/firebase_service.dart';
+import '../util/custom_theme.dart';
+import '../util/validators.dart';
+import 'confirmation_dialog.dart';
 
+class AddTransactionDialog extends StatefulWidget {
   const AddTransactionDialog({
     this.documentSnapshot,
     Key? key,
   })  : editMode = documentSnapshot != null,
         super(key: key);
 
+  final bool editMode;
+  final QueryDocumentSnapshot<TransactionModel>? documentSnapshot;
+
   @override
   State<AddTransactionDialog> createState() => AddTransactionDialogState();
 }
 
 class AddTransactionDialogState extends State<AddTransactionDialog> {
-  final _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController? _amountController;
   Category? _category;
   TextEditingController? _categoryController;
-  DateTime? _createdOn;
+  late DateTime? _createdOn;
   TextEditingController? _createdOnController;
   TextEditingController? _nameController;
   TextEditingController? _noteController;
@@ -53,14 +54,14 @@ class AddTransactionDialogState extends State<AddTransactionDialog> {
     _categoryController = TextEditingController();
     _createdOn = DateTime.now();
     _createdOnController = TextEditingController(
-      text: CustomTheme.getDefaultDateFormat().format(DateTime.now()),
+      text: getDefaultDateFormat().format(DateTime.now()),
     );
     _nameController = TextEditingController();
     _noteController = TextEditingController();
   }
 
   void _initializeWithExistingValues() {
-    TransactionModel data = widget.documentSnapshot!.data();
+    final TransactionModel data = widget.documentSnapshot!.data();
 
     _amountController = TextEditingController(
       text: (data.amountCents / 100).toString(),
@@ -71,7 +72,7 @@ class AddTransactionDialogState extends State<AddTransactionDialog> {
     );
     _createdOn = data.createdOn;
     _createdOnController = TextEditingController(
-      text: CustomTheme.getDefaultDateFormat().format(data.createdOn),
+      text: getDefaultDateFormat().format(data.createdOn),
     );
     _nameController = TextEditingController(text: data.name);
     _noteController = TextEditingController(text: data.note);
@@ -88,10 +89,10 @@ class AddTransactionDialogState extends State<AddTransactionDialog> {
           key: _formKey,
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            children: [
+            children: <Widget>[
               TextFormField(
                 controller: _createdOnController,
-                decoration: CustomTheme.getDefaultInputDecoration(
+                decoration: getDefaultInputDecoration(
                   labelText: AppLocalizations.of(context)!.createdOn,
                 ),
                 onTap: _showDatePicker,
@@ -101,7 +102,7 @@ class AddTransactionDialogState extends State<AddTransactionDialog> {
               TextFormField(
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: _nameController,
-                decoration: CustomTheme.getDefaultInputDecoration(
+                decoration: getDefaultInputDecoration(
                   labelText: AppLocalizations.of(context)!.name,
                 ),
                 keyboardType: TextInputType.text,
@@ -113,11 +114,10 @@ class AddTransactionDialogState extends State<AddTransactionDialog> {
               TextFormField(
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: _amountController,
-                decoration: CustomTheme.getDefaultInputDecoration(
+                decoration: getDefaultInputDecoration(
                   labelText: AppLocalizations.of(context)!.amount,
                 ),
                 keyboardType: const TextInputType.numberWithOptions(
-                  signed: false,
                   decimal: true,
                 ),
                 validator: _validateAmount,
@@ -125,7 +125,7 @@ class AddTransactionDialogState extends State<AddTransactionDialog> {
               const SizedBox(height: 8.0),
               TextFormField(
                 controller: _noteController,
-                decoration: CustomTheme.getDefaultInputDecoration(
+                decoration: getDefaultInputDecoration(
                   labelText: AppLocalizations.of(context)!.note,
                 ),
                 keyboardType: TextInputType.text,
@@ -135,7 +135,7 @@ class AddTransactionDialogState extends State<AddTransactionDialog> {
           ),
         ),
       ),
-      actions: [
+      actions: <Widget>[
         TextButton(
           onPressed: _cancel,
           child: Text(AppLocalizations.of(context)!.cancel.toUpperCase()),
@@ -156,7 +156,7 @@ class AddTransactionDialogState extends State<AddTransactionDialog> {
     );
   }
 
-  TypeAheadFormField _buildCategoryFormField() {
+  TypeAheadFormField<Category> _buildCategoryFormField() {
     return TypeAheadFormField<Category>(
       autovalidateMode: AutovalidateMode.onUserInteraction,
       itemBuilder: (BuildContext context, Category suggestion) => ListTile(
@@ -166,25 +166,24 @@ class AddTransactionDialogState extends State<AddTransactionDialog> {
         _category = suggestion;
         _categoryController!.text = suggestion.translation(context);
       },
-      suggestionsCallback: (pattern) => Category.values.where(
-        (category) => category
+      suggestionsCallback: (String pattern) => Category.values.where(
+        (Category category) => category
             .translation(context)
             .toLowerCase()
             .contains(pattern.trim().toLowerCase()),
       ),
       textFieldConfiguration: TextFieldConfiguration(
         controller: _categoryController,
-        decoration: CustomTheme.getDefaultInputDecoration(
+        decoration: getDefaultInputDecoration(
           labelText: AppLocalizations.of(context)!.category,
         ),
-        keyboardType: TextInputType.text,
       ),
       validator: _validateCategory,
     );
   }
 
-  void _showDatePicker() async {
-    DateTime? date = await showDatePicker(
+  Future<void> _showDatePicker() async {
+    final DateTime? date = await showDatePicker(
       context: context,
       initialDate: _createdOn!,
       firstDate: DateTime(1900),
@@ -192,7 +191,7 @@ class AddTransactionDialogState extends State<AddTransactionDialog> {
     );
 
     _createdOn = date ?? DateTime.now();
-    _createdOnController!.text = CustomTheme.getDefaultDateFormat().format(
+    _createdOnController!.text = getDefaultDateFormat().format(
       _createdOn!,
     );
   }
@@ -201,10 +200,10 @@ class AddTransactionDialogState extends State<AddTransactionDialog> {
     Navigator.of(context).pop();
   }
 
-  void _delete() async {
-    bool? deleteConfirmed = await showDialog<bool>(
+  Future<void> _delete() async {
+    final bool? deleteConfirmed = await showDialog<bool>(
       context: context,
-      builder: (context) => ConfirmationDialog(
+      builder: (BuildContext context) => ConfirmationDialog(
         title: AppLocalizations.of(context)!.confirmDeleteTransaction,
       ),
     );
@@ -218,25 +217,29 @@ class AddTransactionDialogState extends State<AddTransactionDialog> {
     });
 
     try {
-      await FirebaseService.getTransactionsCollection()
+      await getTransactionsCollection()
           .doc(widget.documentSnapshot!.id)
           .delete();
     } on FirebaseException catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(e.message.toString()),
-        ),
-      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(e.message.toString()),
+          ),
+        );
+      }
     }
 
     setState(() {
       _active = true;
     });
 
-    Navigator.of(context).pop();
+    if (mounted) {
+      Navigator.of(context).pop();
+    }
   }
 
-  void _submit() async {
+  Future<void> _submit() async {
     if (!_formKey.currentState!.validate()) {
       return;
     }
@@ -246,7 +249,7 @@ class AddTransactionDialogState extends State<AddTransactionDialog> {
     });
 
     try {
-      TransactionModel data = TransactionModel(
+      final TransactionModel data = TransactionModel(
         amountCents: (double.parse(_amountController!.text) * 100).round(),
         category: _category ?? Category.miscellaneous,
         createdOn: _createdOn!,
@@ -256,11 +259,11 @@ class AddTransactionDialogState extends State<AddTransactionDialog> {
       );
 
       if (widget.editMode) {
-        await FirebaseService.getTransactionsCollection()
+        await getTransactionsCollection()
             .doc(widget.documentSnapshot!.id)
             .update(data.toJson());
       } else {
-        await FirebaseService.getTransactionsCollection().add(data);
+        await getTransactionsCollection().add(data);
       }
     } on FirebaseException catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -274,11 +277,13 @@ class AddTransactionDialogState extends State<AddTransactionDialog> {
       _active = true;
     });
 
-    Navigator.of(context).pop();
+    if (mounted) {
+      Navigator.of(context).pop();
+    }
   }
 
   String? _validateName(String? name) {
-    switch (Validators.required(name)) {
+    switch (validateRequired(name)) {
       case ValidationError.emptyInput:
         return AppLocalizations.of(context)!.emptyInput;
       default:
@@ -287,20 +292,20 @@ class AddTransactionDialogState extends State<AddTransactionDialog> {
   }
 
   String? _validateCategory(String? category) {
-    switch (Validators.required(category)) {
+    switch (validateRequired(category)) {
       case ValidationError.emptyInput:
         return AppLocalizations.of(context)!.emptyInput;
       default:
         break;
     }
 
-    if (CategoryHelper.fromTranslation(context, category) == null) {
+    if (categoryFromTranslation(context, category) == null) {
       return AppLocalizations.of(context)!.invalidCategory;
     }
   }
 
   String? _validateAmount(String? amount) {
-    switch (Validators.isDouble(amount, signed: false)) {
+    switch (validateDouble(amount, signed: false)) {
       case ValidationError.emptyInput:
         return AppLocalizations.of(context)!.emptyInput;
       case ValidationError.notANumber:

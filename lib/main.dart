@@ -1,8 +1,9 @@
-import 'package:consilium/pages/home/page.dart';
-import 'package:consilium/pages/login/page.dart';
-import 'package:consilium/pages/splash/page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import 'pages/home/page.dart';
+import 'pages/login/page.dart';
+import 'pages/splash/page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,10 +22,10 @@ class MyApp extends StatelessWidget {
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       initialRoute: SplashPage.route,
-      routes: {
-        SplashPage.route: (context) => const SplashPage(),
-        HomePage.route: (context) => const HomePage(),
-        LoginPage.route: (context) => const LoginPage(),
+      routes: <String, Widget Function(BuildContext)>{
+        SplashPage.route: (BuildContext context) => const SplashPage(),
+        HomePage.route: (BuildContext context) => const HomePage(),
+        LoginPage.route: (BuildContext context) => const LoginPage(),
       },
     );
   }

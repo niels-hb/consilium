@@ -1,16 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:consilium/models/category.dart';
-import 'package:consilium/models/schedule_model.dart';
-import 'package:consilium/util/custom_theme.dart';
 import 'package:flutter/material.dart';
 
-class ScheduleListTile extends StatelessWidget {
-  final QueryDocumentSnapshot<ScheduleModel> schedule;
+import '../models/category.dart';
+import '../models/schedule_model.dart';
+import '../util/custom_theme.dart';
 
+class ScheduleListTile extends StatelessWidget {
   const ScheduleListTile({
     required this.schedule,
     Key? key,
   }) : super(key: key);
+
+  final QueryDocumentSnapshot<ScheduleModel> schedule;
 
   @override
   Widget build(BuildContext context) {
@@ -18,22 +19,22 @@ class ScheduleListTile extends StatelessWidget {
       padding: const EdgeInsets.only(top: 16.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
+        children: <Widget>[
           Flexible(
             child: Row(
-              children: [
+              children: <Widget>[
                 Icon(schedule.data().category.icon()),
                 const SizedBox(width: 16.0),
                 Flexible(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+                    children: <Widget>[
                       Text(
                         schedule.data().name,
                         overflow: TextOverflow.ellipsis,
                       ),
                       Text(
-                        CustomTheme.getDefaultDateFormat().format(
+                        getDefaultDateFormat().format(
                           schedule.data().nextPaymentOn,
                         ),
                         style: Theme.of(context).textTheme.caption,
@@ -45,7 +46,7 @@ class ScheduleListTile extends StatelessWidget {
             ),
           ),
           Text(
-            CustomTheme.getDefaultNumberFormat().format(
+            getDefaultNumberFormat().format(
               schedule.data().signedAmountCents / 100,
             ),
             style: Theme.of(context).textTheme.bodyText1,
