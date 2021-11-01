@@ -78,5 +78,13 @@
     "no": "No",
     "delete": "Delete",
     "confirmDeleteTransaction": "Delete payment?",
-    "signOut": "Sign out"
+    "signOut": "Sign out",
+    "nextPayment": "Next payment",
+    "createdOn": "Created on",
+    "startedOn": "Started on",
+    "canceledOn": "Canceled on",
+    "monthAbbreviated": "mo.",
+    "@monthAbbreviated": {
+      "description": "Abbreviated version of 'month'. Shown in the schedule list tile."
+    }
 }

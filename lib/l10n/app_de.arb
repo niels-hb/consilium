@@ -48,5 +48,10 @@
     "no": "Nein",
     "delete": "Löschen",
     "confirmDeleteTransaction": "Zahlung löschen?",
-    "signOut": "Abmelden"
+    "signOut": "Abmelden",
+    "nextPayment": "Nächste Zahlung",
+    "createdOn": "Erstellt am",
+    "startedOn": "Gestartet am",
+    "canceledOn": "Gekündigt am",
+    "monthAbbreviated": "Mo."
 }
