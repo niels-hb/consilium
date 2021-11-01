@@ -5,6 +5,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../models/category.dart';
 import '../models/schedule_model.dart';
 import '../util/custom_theme.dart';
+import 'add_schedule_dialog.dart';
 
 class ScheduleListTile extends StatelessWidget {
   ScheduleListTile({
@@ -78,21 +79,30 @@ class ScheduleListTile extends StatelessWidget {
               ],
             ),
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
+          Row(
             children: <Widget>[
-              _buildAmountText(
-                context,
-                amount: data.signedAmount,
-                interval: data.frequencyMonths,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: <Widget>[
+                  _buildAmountText(
+                    context,
+                    amount: data.signedAmount,
+                    interval: data.frequencyMonths,
+                  ),
+                  if (!compact) ...<Widget>[
+                    const SizedBox(height: 4.0),
+                    _buildAmountText(
+                      context,
+                      amount: data.signedMonthlyAmount,
+                    ),
+                  ]
+                ],
               ),
-              if (!compact) ...<Widget>[
-                const SizedBox(height: 4.0),
-                _buildAmountText(
-                  context,
-                  amount: data.signedMonthlyAmount,
-                ),
-              ]
+              IconButton(
+                onPressed: () => _edit(context),
+                icon: const Icon(Icons.edit),
+                tooltip: AppLocalizations.of(context)!.edit,
+              ),
             ],
           ),
         ],
@@ -137,5 +147,14 @@ class ScheduleListTile extends StatelessWidget {
     }
 
     return '${getDefaultNumberFormat().format(amount)}/$suffix';
+  }
+
+  void _edit(BuildContext context) {
+    showDialog<void>(
+      context: context,
+      builder: (BuildContext context) => AddScheduleDialog(
+        documentSnapshot: schedule,
+      ),
+    );
   }
 }
