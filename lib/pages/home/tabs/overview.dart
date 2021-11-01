@@ -231,6 +231,7 @@ class _LatestTransactionsCard extends StatelessWidget {
         IconButton(
           onPressed: () => _addTransaction(context),
           icon: const Icon(Icons.add),
+          tooltip: AppLocalizations.of(context)!.addTransaction,
         ),
       ],
     );

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../models/category.dart';
 import '../models/transaction_model.dart';
@@ -57,6 +58,7 @@ class TransactionListTile extends StatelessWidget {
               IconButton(
                 onPressed: () => _edit(context),
                 icon: const Icon(Icons.edit),
+                tooltip: AppLocalizations.of(context)!.edit,
               ),
             ],
           ),

@@ -115,6 +115,7 @@ class _LoggedInPageState extends State<_LoggedInPage> {
           IconButton(
             onPressed: _signOut,
             icon: const Icon(Icons.logout),
+            tooltip: AppLocalizations.of(context)!.signOut,
           ),
         ],
       ),

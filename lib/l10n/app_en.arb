@@ -77,5 +77,6 @@
     "yes": "Yes",
     "no": "No",
     "delete": "Delete",
-    "confirmDeleteTransaction": "Delete payment?"
+    "confirmDeleteTransaction": "Delete payment?",
+    "signOut": "Sign out"
 }

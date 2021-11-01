@@ -47,5 +47,6 @@
     "yes": "Ja",
     "no": "Nein",
     "delete": "Löschen",
-    "confirmDeleteTransaction": "Zahlung löschen?"
+    "confirmDeleteTransaction": "Zahlung löschen?",
+    "signOut": "Abmelden"
 }
