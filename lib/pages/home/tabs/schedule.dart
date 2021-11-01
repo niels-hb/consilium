@@ -102,10 +102,14 @@ class ScheduleTab extends StatelessWidget {
 }
 
 class _ChartsCard extends StatefulWidget {
-  const _ChartsCard({
-    required this.data,
+  _ChartsCard({
+    required List<QueryDocumentSnapshot<ScheduleModel>> data,
     Key? key,
-  }) : super(key: key);
+  })  : data = data
+            .where((QueryDocumentSnapshot<ScheduleModel> snapshot) =>
+                snapshot.data().active)
+            .toList(),
+        super(key: key);
 
   final List<QueryDocumentSnapshot<ScheduleModel>> data;
 
