@@ -444,6 +444,7 @@ class _ScheduleListCard extends StatelessWidget {
 
     return ListView.builder(
       shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
       itemCount: data.length,
       itemBuilder: (BuildContext context, int index) => ScheduleListTile(
         schedule: data[index],
