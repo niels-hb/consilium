@@ -192,10 +192,7 @@ class AddScheduleDialogState extends State<AddScheduleDialog> {
                 decoration: getDefaultInputDecoration(
                   labelText: AppLocalizations.of(context)!.amount,
                 ),
-                keyboardType: const TextInputType.numberWithOptions(
-                  decimal: true,
-                  signed: true,
-                ),
+                keyboardType: TextInputType.text,
                 validator: _validateAmount,
               ),
               const SizedBox(height: 8.0),

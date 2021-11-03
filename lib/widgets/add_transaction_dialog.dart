@@ -117,9 +117,7 @@ class AddTransactionDialogState extends State<AddTransactionDialog> {
                 decoration: getDefaultInputDecoration(
                   labelText: AppLocalizations.of(context)!.amount,
                 ),
-                keyboardType: const TextInputType.numberWithOptions(
-                  decimal: true,
-                ),
+                keyboardType: TextInputType.text,
                 validator: _validateAmount,
               ),
               const SizedBox(height: 8.0),
