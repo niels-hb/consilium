@@ -4,13 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
-import 'package:intl/intl.dart';
 
 import '../models/category.dart';
 import '../models/transaction_model.dart';
 import '../services/firebase_service.dart';
 import '../util/custom_theme.dart';
-import '../util/formatter.dart';
 import '../util/validators.dart';
 import 'confirmation_dialog.dart';
 
@@ -252,7 +250,7 @@ class AddTransactionDialogState extends State<AddTransactionDialog> {
 
     try {
       final TransactionModel data = TransactionModel(
-        amount: NumberFormat().tryParse(_amountController!.text)!,
+        amount: double.parse(_amountController!.text),
         category: _category ?? Category.miscellaneous,
         createdOn: _createdOn!,
         name: _nameController!.text,

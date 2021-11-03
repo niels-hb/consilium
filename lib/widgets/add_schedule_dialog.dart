@@ -4,14 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
-import 'package:intl/intl.dart';
 
 import '../models/category.dart';
 import '../models/schedule_model.dart';
 import '../models/schedule_type.dart';
 import '../services/firebase_service.dart';
 import '../util/custom_theme.dart';
-import '../util/formatter.dart';
 import '../util/validators.dart';
 import 'confirmation_dialog.dart';
 
@@ -335,16 +333,16 @@ class AddScheduleDialogState extends State<AddScheduleDialog> {
     });
 
     try {
-      final double _amount = NumberFormat().tryParse(_amountController!.text)!;
-
       final ScheduleModel data = ScheduleModel(
-        amount: _amount.abs(),
+        amount: double.parse(_amountController!.text).abs(),
         category: _category ?? Category.miscellaneous,
         createdOn: _createdOn!,
         frequencyMonths: int.parse(_frequencyMonthsController!.text),
         name: _nameController!.text,
         startedOn: _startedOn!,
-        type: _amount < 0 ? ScheduleType.outgoing : ScheduleType.incoming,
+        type: double.parse(_amountController!.text) < 0
+            ? ScheduleType.outgoing
+            : ScheduleType.incoming,
         uid: FirebaseAuth.instance.currentUser!.uid,
         canceledOn: _canceledOn,
         note: _noteController!.text.isEmpty ? null : _noteController!.text,
