@@ -21,12 +21,11 @@ double _getWidthMultiplier(BuildContext context) {
 }
 
 DateFormat getDefaultDateFormat() {
-  return DateFormat.yMd('de');
+  return DateFormat.yMd();
 }
 
 NumberFormat getDefaultNumberFormat() {
   return NumberFormat.currency(
-    locale: 'de',
     symbol: '€',
   );
 }
