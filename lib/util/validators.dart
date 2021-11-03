@@ -1,3 +1,7 @@
+import 'package:intl/intl.dart';
+
+import 'formatter.dart';
+
 enum ValidationError {
   emptyInput,
   invalidEmail,
@@ -25,7 +29,7 @@ ValidationError? validateDouble(
     return ValidationError.emptyInput;
   }
 
-  final double? number = double.tryParse(string);
+  final double? number = NumberFormat().tryParse(string);
 
   if (number == null) {
     return ValidationError.notANumber;
