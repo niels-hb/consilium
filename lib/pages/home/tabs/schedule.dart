@@ -158,8 +158,8 @@ class _ChartsCardState extends State<_ChartsCard> {
   Widget _buildCharts() {
     return Column(
       children: <Widget>[
-        ConstrainedBox(
-          constraints: const BoxConstraints(maxHeight: 400.0),
+        AspectRatio(
+          aspectRatio: 1,
           child: PageView(
             onPageChanged: (int page) {
               setState(() {
@@ -189,32 +189,34 @@ class _ChartsCardState extends State<_ChartsCard> {
       );
     }
 
-    return PieChart(
-      PieChartData(
-        centerSpaceRadius: 0,
-        sections: <PieChartSectionData>[
-          for (MapEntry<Category, double> mapEntry in categories.entries)
-            PieChartSectionData(
-              value: mapEntry.value,
-              title: getDefaultNumberFormat().format(mapEntry.value),
-              radius: 160.0,
-              color: mapEntry.key.color(),
-              badgeWidget: DecoratedBox(
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.white,
-                  boxShadow: <BoxShadow>[
-                    BoxShadow(blurRadius: 4.0),
-                  ],
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) => PieChart(
+        PieChartData(
+          centerSpaceRadius: 0,
+          sections: <PieChartSectionData>[
+            for (MapEntry<Category, double> mapEntry in categories.entries)
+              PieChartSectionData(
+                value: mapEntry.value,
+                title: getDefaultNumberFormat().format(mapEntry.value),
+                radius: (constraints.maxWidth / 2) - 32.0,
+                color: mapEntry.key.color(),
+                badgeWidget: DecoratedBox(
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white,
+                    boxShadow: <BoxShadow>[
+                      BoxShadow(blurRadius: 4.0),
+                    ],
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: Icon(mapEntry.key.icon()),
+                  ),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: Icon(mapEntry.key.icon()),
-                ),
+                badgePositionPercentageOffset: 1.0,
               ),
-              badgePositionPercentageOffset: 1.0,
-            ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -222,44 +224,50 @@ class _ChartsCardState extends State<_ChartsCard> {
   Widget _pieChartByType() {
     final Map<ScheduleType, double> types = getAmountPerType(widget.data);
 
-    if (types.isEmpty) {
+    if (types.length != 2) {
       return Center(
         child: Text(AppLocalizations.of(context)!.emptyResultSet),
       );
     }
 
-    final double sum = (types[ScheduleType.incoming] ?? 0) +
-        (types[ScheduleType.outgoing] ?? 0);
+    final double expenses = (types[ScheduleType.outgoing] ?? 0) /
+        (types[ScheduleType.incoming] ?? 0);
+    final double income = 1 - expenses;
 
-    return PieChart(
-      PieChartData(
-        centerSpaceRadius: 0,
-        sections: <PieChartSectionData>[
-          _getPieChartSectionDataForType(
-            value: types[ScheduleType.incoming] ?? 0,
-            sum: sum,
-            color: Colors.green,
-          ),
-          _getPieChartSectionDataForType(
-            value: types[ScheduleType.outgoing] ?? 0,
-            sum: sum,
-            color: Colors.orange,
-          ),
-        ],
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) => PieChart(
+        PieChartData(
+          centerSpaceRadius: 0,
+          sections: <PieChartSectionData>[
+            _getPieChartSectionDataForType(
+              value: types[ScheduleType.incoming] ?? 0,
+              percentage: income,
+              color: Colors.green,
+              constraints: constraints,
+            ),
+            _getPieChartSectionDataForType(
+              value: types[ScheduleType.outgoing] ?? 0,
+              percentage: expenses,
+              color: Colors.orange,
+              constraints: constraints,
+            ),
+          ],
+        ),
       ),
     );
   }
 
   PieChartSectionData _getPieChartSectionDataForType({
     required double value,
-    required double sum,
+    required double percentage,
     required Color color,
+    required BoxConstraints constraints,
   }) =>
       PieChartSectionData(
-        value: value,
+        value: percentage,
         title:
-            '${NumberFormat.percentPattern().format(value / sum)} (${getDefaultNumberFormat().format(value)})',
-        radius: 160.0,
+            '${NumberFormat.percentPattern().format(percentage)} (${getDefaultNumberFormat().format(value)})',
+        radius: (constraints.maxWidth / 2) - 32.0,
         color: color,
       );
 }
