@@ -23,89 +23,83 @@ class ScheduleListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final AppLocalizations loc = AppLocalizations.of(context)!;
 
-    return Padding(
-      padding: const EdgeInsets.only(top: 16.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Flexible(
-            child: Row(
-              children: <Widget>[
-                Icon(data.category.icon()),
-                const SizedBox(width: 16.0),
-                Flexible(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        data.name,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      const SizedBox(height: 4.0),
-                      _buildCaptionText(
-                        context,
-                        _formatDateWithPrefix(
-                          prefix: loc.nextPayment,
-                          date: data.nextPaymentOn,
+    return InkWell(
+      onTap: () => _edit(context),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 16.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Flexible(
+              child: Row(
+                children: <Widget>[
+                  Icon(data.category.icon()),
+                  const SizedBox(width: 16.0),
+                  Flexible(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          data.name,
+                          overflow: TextOverflow.ellipsis,
                         ),
-                      ),
-                      if (!compact) ...<Widget>[
+                        const SizedBox(height: 4.0),
                         _buildCaptionText(
                           context,
                           _formatDateWithPrefix(
-                            prefix: loc.startedOn,
-                            date: data.startedOn,
+                            prefix: loc.nextPayment,
+                            date: data.nextPaymentOn,
                           ),
                         ),
-                        _buildCaptionText(
-                          context,
-                          _formatDateWithPrefix(
-                            prefix: loc.createdOn,
-                            date: data.createdOn,
-                          ),
-                        ),
-                        if (data.canceledOn != null)
+                        if (!compact) ...<Widget>[
                           _buildCaptionText(
                             context,
                             _formatDateWithPrefix(
-                              prefix: loc.canceledOn,
-                              date: data.canceledOn!,
+                              prefix: loc.startedOn,
+                              date: data.startedOn,
                             ),
                           ),
-                      ]
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Row(
-            children: <Widget>[
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: <Widget>[
-                  _buildAmountText(
-                    context,
-                    amount: data.signedAmount,
-                    interval: data.frequencyMonths,
-                  ),
-                  if (!compact) ...<Widget>[
-                    const SizedBox(height: 4.0),
-                    _buildAmountText(
-                      context,
-                      amount: data.signedMonthlyAmount,
+                          _buildCaptionText(
+                            context,
+                            _formatDateWithPrefix(
+                              prefix: loc.createdOn,
+                              date: data.createdOn,
+                            ),
+                          ),
+                          if (data.canceledOn != null)
+                            _buildCaptionText(
+                              context,
+                              _formatDateWithPrefix(
+                                prefix: loc.canceledOn,
+                                date: data.canceledOn!,
+                              ),
+                            ),
+                        ]
+                      ],
                     ),
-                  ]
+                  ),
                 ],
               ),
-              IconButton(
-                onPressed: () => _edit(context),
-                icon: const Icon(Icons.edit),
-                tooltip: AppLocalizations.of(context)!.edit,
-              ),
-            ],
-          ),
-        ],
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: <Widget>[
+                _buildAmountText(
+                  context,
+                  amount: data.signedAmount,
+                  interval: data.frequencyMonths,
+                ),
+                if (!compact) ...<Widget>[
+                  const SizedBox(height: 4.0),
+                  _buildAmountText(
+                    context,
+                    amount: data.signedMonthlyAmount,
+                  ),
+                ]
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
