@@ -97,5 +97,6 @@
     "numberNotGreaterThanZero": "Number has to be greater than 0.",
     "income": "Income",
     "expenses": "Expenses",
-    "activeToInactiveSchedules": "Active/Inactive"
+    "activeToInactiveSchedules": "Active/Inactive",
+    "transactions": "Payments"
 }

@@ -64,5 +64,6 @@
     "numberNotGreaterThanZero": "Zahl muss größer als 0 sein.",
     "income": "Einkommen",
     "expenses": "Ausgaben",
-    "activeToInactiveSchedules": "Aktiv/Inaktiv"
+    "activeToInactiveSchedules": "Aktiv/Inaktiv",
+    "transactions": "Ausgaben"
 }

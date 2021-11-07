@@ -98,7 +98,7 @@ class _LoggedInPageState extends State<_LoggedInPage> {
           ),
         ),
         _TabDefinition(
-          content: const DetailsTab(),
+          content: DetailsTab(),
           bottomNavigationBarItem: BottomNavigationBarItem(
             icon: const Icon(FontAwesomeIcons.chartArea),
             label: AppLocalizations.of(context)!.details,
