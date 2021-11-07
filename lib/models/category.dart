@@ -11,6 +11,7 @@ enum Category {
   miscellaneous,
   hygiene,
   recreation,
+  savings,
   subscriptions,
   transportation,
   utilities
@@ -35,6 +36,8 @@ extension CategoryExtension on Category {
         return AppLocalizations.of(context)!.hygiene;
       case Category.recreation:
         return AppLocalizations.of(context)!.recreation;
+      case Category.savings:
+        return AppLocalizations.of(context)!.savings;
       case Category.subscriptions:
         return AppLocalizations.of(context)!.subscriptions;
       case Category.transportation:
@@ -62,6 +65,8 @@ extension CategoryExtension on Category {
         return Icons.soap;
       case Category.recreation:
         return Icons.gamepad;
+      case Category.savings:
+        return Icons.savings;
       case Category.subscriptions:
         return Icons.subscriptions;
       case Category.transportation:
@@ -89,6 +94,8 @@ extension CategoryExtension on Category {
         return Colors.cyan;
       case Category.recreation:
         return Colors.teal;
+      case Category.savings:
+        return Colors.lightGreen;
       case Category.subscriptions:
         return Colors.amber;
       case Category.transportation:
@@ -121,6 +128,8 @@ Category? categoryFromTranslation(
     return Category.hygiene;
   } else if (translation == localizations.recreation) {
     return Category.recreation;
+  } else if (translation == localizations.savings) {
+    return Category.savings;
   } else if (translation == localizations.subscriptions) {
     return Category.subscriptions;
   } else if (translation == localizations.transportation) {

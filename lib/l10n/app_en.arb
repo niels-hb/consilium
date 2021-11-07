@@ -98,5 +98,6 @@
     "income": "Income",
     "expenses": "Expenses",
     "activeToInactiveSchedules": "Active/Inactive",
-    "transactions": "Payments"
+    "transactions": "Payments",
+    "savings": "Savings"
 }
