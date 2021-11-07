@@ -41,7 +41,7 @@ class DetailsTab extends StatelessWidget {
                   data: snapshot.data!.docs,
                 ),
                 const SizedBox(height: 16.0),
-                _LatestTransactionsCard(
+                _TransactionsCard(
                   data: snapshot.data!.docs,
                 ),
                 const SizedBox(height: 16.0),
@@ -140,8 +140,8 @@ class _SummaryCard extends StatelessWidget {
   }
 }
 
-class _LatestTransactionsCard extends StatelessWidget {
-  const _LatestTransactionsCard({
+class _TransactionsCard extends StatelessWidget {
+  const _TransactionsCard({
     required this.data,
     Key? key,
   }) : super(key: key);
