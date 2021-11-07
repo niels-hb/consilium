@@ -120,6 +120,7 @@ class _UpcomingPaymentsCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 _buildHeader(context),
+                const SizedBox(height: 16.0),
                 _buildScheduleList(),
               ],
             ),

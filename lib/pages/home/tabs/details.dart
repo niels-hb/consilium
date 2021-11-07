@@ -161,6 +161,7 @@ class _TransactionsCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 _buildHeader(context),
+                const SizedBox(height: 16.0),
                 _buildTransactionList(context),
               ],
             ),
