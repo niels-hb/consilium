@@ -99,5 +99,6 @@
     "expenses": "Expenses",
     "activeToInactiveSchedules": "Active/Inactive",
     "transactions": "Payments",
-    "savings": "Savings"
+    "savings": "Savings",
+    "search": "Search"
 }

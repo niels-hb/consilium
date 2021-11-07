@@ -140,13 +140,27 @@ class _SummaryCard extends StatelessWidget {
   }
 }
 
-class _TransactionsCard extends StatelessWidget {
+class _TransactionsCard extends StatefulWidget {
   const _TransactionsCard({
     required this.data,
     Key? key,
   }) : super(key: key);
 
   final List<QueryDocumentSnapshot<TransactionModel>> data;
+
+  @override
+  State<_TransactionsCard> createState() => _TransactionsCardState();
+}
+
+class _TransactionsCardState extends State<_TransactionsCard> {
+  late List<QueryDocumentSnapshot<TransactionModel>> filteredData;
+
+  @override
+  void initState() {
+    super.initState();
+
+    filteredData = widget.data;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -172,14 +186,26 @@ class _TransactionsCard extends StatelessWidget {
   }
 
   Widget _buildHeader(BuildContext context) {
-    return Text(
-      AppLocalizations.of(context)!.transactions,
-      style: Theme.of(context).textTheme.subtitle1,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          AppLocalizations.of(context)!.transactions,
+          style: Theme.of(context).textTheme.subtitle1,
+        ),
+        const SizedBox(height: 16.0),
+        TextFormField(
+          decoration: getDefaultInputDecoration(
+            labelText: AppLocalizations.of(context)!.search,
+          ),
+          onChanged: _filterResults,
+        ),
+      ],
     );
   }
 
   Widget _buildTransactionList(BuildContext context) {
-    if (data.isEmpty) {
+    if (filteredData.isEmpty) {
       return Center(
         child: Text(AppLocalizations.of(context)!.emptyResultSet),
       );
@@ -188,10 +214,25 @@ class _TransactionsCard extends StatelessWidget {
     return ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: data.length,
+      itemCount: filteredData.length,
       itemBuilder: (BuildContext context, int index) => TransactionListTile(
-        transaction: data[index],
+        transaction: filteredData[index],
       ),
     );
+  }
+
+  void _filterResults(String query) {
+    setState(() {
+      filteredData = widget.data
+          .where(
+            (QueryDocumentSnapshot<TransactionModel> snapshot) => snapshot
+                .data()
+                .name
+                .trim()
+                .toLowerCase()
+                .contains(query.trim().toLowerCase()),
+          )
+          .toList();
+    });
   }
 }

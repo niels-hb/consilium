@@ -66,5 +66,6 @@
     "expenses": "Ausgaben",
     "activeToInactiveSchedules": "Aktiv/Inaktiv",
     "transactions": "Ausgaben",
-    "savings": "Ersparnisse"
+    "savings": "Ersparnisse",
+    "search": "Suche"
 }
