@@ -43,7 +43,6 @@ class ScheduleListTile extends StatelessWidget {
                           data.name,
                           overflow: TextOverflow.ellipsis,
                         ),
-                        const SizedBox(height: 4.0),
                         _buildCaptionText(
                           context,
                           _formatDateWithPrefix(
