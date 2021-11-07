@@ -11,7 +11,7 @@ service cloud.firestore {
         'miscellaneous',
         'hygiene',
         'recreation',
-        'savings,
+        'savings',
         'subscriptions',
         'transportation',
         'utilities'
