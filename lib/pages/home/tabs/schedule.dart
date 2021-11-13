@@ -264,7 +264,7 @@ class _ChartsCardState extends State<_ChartsCard> {
     required BoxConstraints constraints,
   }) =>
       PieChartSectionData(
-        value: percentage,
+        value: percentage.clamp(0, 1),
         title:
             '${NumberFormat.percentPattern().format(percentage)} (${getDefaultNumberFormat().format(value)})',
         radius: (constraints.maxWidth / 2) - 32.0,
