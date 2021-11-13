@@ -42,6 +42,12 @@ class _MonthToDateCard extends StatelessWidget {
           Jiffy().startOf(Units.MONTH).dateTime,
         ),
       )
+      .where(
+        'created_on',
+        isLessThanOrEqualTo: Timestamp.fromDate(
+          Jiffy().endOf(Units.MONTH).dateTime,
+        ),
+      )
       .orderBy('created_on', descending: true);
 
   @override
