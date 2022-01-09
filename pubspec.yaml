@@ -42,7 +42,7 @@ dependencies:
 
   enum_to_string: ^2.0.1
 
-  jiffy: ^4.1.0
+  jiffy: ^5.0.0
 
   firebase_core: ^1.7.0
   firebase_auth: ^3.1.3
