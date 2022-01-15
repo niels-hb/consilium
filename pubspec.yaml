@@ -50,7 +50,7 @@ dependencies:
 
   flutter_typeahead: ^3.2.1
 
-  fl_chart: ^0.40.2
+  fl_chart: ^0.41.0
 
 dev_dependencies:
   flutter_test:
