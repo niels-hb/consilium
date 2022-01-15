@@ -1,4 +1,4 @@
-package com.example.consilium
+package dev.heidbrink.consilium
 
 import io.flutter.embedding.android.FlutterActivity
 
