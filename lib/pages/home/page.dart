@@ -21,7 +21,7 @@ class _TabDefinition {
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
-  static const String route = '/home';
+  static const String route = '/';
 
   @override
   Widget build(BuildContext context) {
