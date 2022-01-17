@@ -1,104 +1,104 @@
 {
-    "appName": "Consilium",
-    "@appName": {
-      "description": "The name of the application."
-    },
-    "loginPageTitle": "Sign in or create an account",
-    "@loginPageTitle": {
-      "description": "Title displayed on the login page."
-    },
-    "or": "or",
-    "signInWithGoogle": "Sign in with Google",
-    "signInWithGitHub": "Sign in with GitHub",
-    "email": "Email",
-    "password": "Password",
-    "registrationIfNoLoginFoundHint": "(An account will be created for you if you do not have one already.)",
-    "@registrationIfNoLoginFoundHint": {
-      "description": "Hint displayed on the login page informing the user that an account will be created if it doesn't exist."
-    },
-    "signIn": "Sign in",
-    "unknownError": "An unknown error occurred.",
-    "@unknownError": {
-      "description": "Generic error message."
-    },
-    "emptyInput": "This field is required.",
-    "@emptyInput": {
-      "description": "Text field validation message for required inputs."
-    },
-    "invalidEmail": "This email address is not valid.",
-    "@invalidEmail": {
-      "description": "Text field validation message if the entered email is invalid."
-    },
-    "invalidPassword": "This password is invalid.",
-    "@invalidPassword": {
-      "description": "Text field validation message if the entered password is invalid."
-    },
-    "weakPassword": "This password is too weak. At least 6 characters are required.",
-    "@weakPassword": {
-      "description": "Text field validation message if the entered password is too weak."
-    },
-    "overview": "Overview",
-    "schedule": "Schedule",
-    "details": "Details",
-    "monthToDate": "Month to date spending",
-    "@monthToDate": {
-      "description": "Displayed on the overview page to indicate the amount spent since the beginning of the month."
-    },
-    "upcomingPayments": "Upcoming payments",
-    "latestTransactions": "Recent payments",
-    "addTransaction": "Add payment",
-    "add": "Add",
-    "cancel": "Cancel",
-    "emptyResultSet": "No results.",
-    "@emptyResultSet": {
-      "description": "Displayed when a list contains no elements (e.g. when the data set is empty)."
-    },
-    "fitness": "Fitness",
-    "food": "Food",
-    "housing": "Housing",
-    "insurance": "Insurance",
-    "medical": "Medical",
-    "miscellaneous": "Miscellaneous",
-    "hygiene": "Hygiene",
-    "recreation": "Recreation & Entertainment",
-    "subscriptions": "Subscriptions",
-    "transportation": "Transportation",
-    "utilities": "Utilities",
-    "createdOn": "Created on",
-    "name": "Name",
-    "category": "Category",
-    "amount": "Amount (€)",
-    "note": "Note",
-    "invalidCategory": "Invalid category.",
-    "notANumber": "Not a valid number.",
-    "unsignedNumberExpected": "Number cannot be negative.",
-    "edit": "Edit",
-    "editTransaction": "Edit payment",
-    "yes": "Yes",
-    "no": "No",
-    "delete": "Delete",
-    "confirmDeleteTransaction": "Delete payment?",
-    "signOut": "Sign out",
-    "nextPayment": "Next payment",
-    "createdOn": "Created on",
-    "startedOn": "Started on",
-    "canceledOn": "Canceled on",
-    "monthAbbreviated": "mo.",
-    "@monthAbbreviated": {
-      "description": "Abbreviated version of 'month'. Shown in the schedule list tile."
-    },
-    "charts": "Charts",
-    "summary": "Summary",
-    "scheduledPayments": "Scheduled payments",
-    "frequencyMonths": "Interval (months)",
-    "addSchedule": "Add scheduled payment",
-    "editSchedule": "Edit scheduled payment",
-    "confirmDeleteSchedule": "Delete scheduled payment?",
-    "numberNotGreaterThanZero": "Number has to be greater than 0.",
-    "income": "Income",
-    "expenses": "Expenses",
-    "activeToInactiveSchedules": "Active/Inactive",
-    "transactions": "Payments",
-    "savings": "Savings",
-    "search": "Search"
+  "appName": "Consilium",
+  "@appName": {
+    "description": "The name of the application."
+  },
+  "loginPageTitle": "Sign in or create an account",
+  "@loginPageTitle": {
+    "description": "Title displayed on the login page."
+  },
+  "or": "or",
+  "signInWithGoogle": "Sign in with Google",
+  "signInWithApple": "Sign in with Apple",
+  "signInWithGitHub": "Sign in with GitHub",
+  "email": "Email",
+  "password": "Password",
+  "registrationIfNoLoginFoundHint": "(An account will be created for you if you do not have one already.)",
+  "@registrationIfNoLoginFoundHint": {
+    "description": "Hint displayed on the login page informing the user that an account will be created if it doesn't exist."
+  },
+  "signIn": "Sign in",
+  "unknownError": "An unknown error occurred.",
+  "@unknownError": {
+    "description": "Generic error message."
+  },
+  "emptyInput": "This field is required.",
+  "@emptyInput": {
+    "description": "Text field validation message for required inputs."
+  },
+  "invalidEmail": "This email address is not valid.",
+  "@invalidEmail": {
+    "description": "Text field validation message if the entered email is invalid."
+  },
+  "invalidPassword": "This password is invalid.",
+  "@invalidPassword": {
+    "description": "Text field validation message if the entered password is invalid."
+  },
+  "weakPassword": "This password is too weak. At least 6 characters are required.",
+  "@weakPassword": {
+    "description": "Text field validation message if the entered password is too weak."
+  },
+  "overview": "Overview",
+  "schedule": "Schedule",
+  "details": "Details",
+  "monthToDate": "Month to date spending",
+  "@monthToDate": {
+    "description": "Displayed on the overview page to indicate the amount spent since the beginning of the month."
+  },
+  "upcomingPayments": "Upcoming payments",
+  "latestTransactions": "Recent payments",
+  "addTransaction": "Add payment",
+  "add": "Add",
+  "cancel": "Cancel",
+  "emptyResultSet": "No results.",
+  "@emptyResultSet": {
+    "description": "Displayed when a list contains no elements (e.g. when the data set is empty)."
+  },
+  "fitness": "Fitness",
+  "food": "Food",
+  "housing": "Housing",
+  "insurance": "Insurance",
+  "medical": "Medical",
+  "miscellaneous": "Miscellaneous",
+  "hygiene": "Hygiene",
+  "recreation": "Recreation & Entertainment",
+  "subscriptions": "Subscriptions",
+  "transportation": "Transportation",
+  "utilities": "Utilities",
+  "createdOn": "Created on",
+  "name": "Name",
+  "category": "Category",
+  "amount": "Amount (€)",
+  "note": "Note",
+  "invalidCategory": "Invalid category.",
+  "notANumber": "Not a valid number.",
+  "unsignedNumberExpected": "Number cannot be negative.",
+  "edit": "Edit",
+  "editTransaction": "Edit payment",
+  "yes": "Yes",
+  "no": "No",
+  "delete": "Delete",
+  "confirmDeleteTransaction": "Delete payment?",
+  "signOut": "Sign out",
+  "nextPayment": "Next payment",
+  "startedOn": "Started on",
+  "canceledOn": "Canceled on",
+  "monthAbbreviated": "mo.",
+  "@monthAbbreviated": {
+    "description": "Abbreviated version of 'month'. Shown in the schedule list tile."
+  },
+  "charts": "Charts",
+  "summary": "Summary",
+  "scheduledPayments": "Scheduled payments",
+  "frequencyMonths": "Interval (months)",
+  "addSchedule": "Add scheduled payment",
+  "editSchedule": "Edit scheduled payment",
+  "confirmDeleteSchedule": "Delete scheduled payment?",
+  "numberNotGreaterThanZero": "Number has to be greater than 0.",
+  "income": "Income",
+  "expenses": "Expenses",
+  "activeToInactiveSchedules": "Active/Inactive",
+  "transactions": "Payments",
+  "savings": "Savings",
+  "search": "Search"
 }
