@@ -14,7 +14,6 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 import '../../environment.dart';
-import '../home/page.dart';
 
 class SocialLoginButton extends StatefulWidget {
   const SocialLoginButton({
