@@ -167,7 +167,7 @@ class _SocialLoginButtonState extends State<SocialLoginButton> {
       }
 
       if (mounted) {
-        Navigator.of(context).pushReplacementNamed(HomePage.route);
+        Navigator.of(context).pop();
       }
     } on FirebaseAuthException catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
