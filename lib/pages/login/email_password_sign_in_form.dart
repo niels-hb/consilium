@@ -154,7 +154,7 @@ class _EmailPasswordSignInFormState extends State<EmailPasswordSignInForm> {
       case ValidationError.invalidEmail:
         return AppLocalizations.of(context)!.invalidEmail;
       default:
-        break;
+        return null;
     }
   }
 
@@ -167,7 +167,7 @@ class _EmailPasswordSignInFormState extends State<EmailPasswordSignInForm> {
       case ValidationError.weakPassword:
         return AppLocalizations.of(context)!.weakPassword;
       default:
-        break;
+        return null;
     }
   }
 }

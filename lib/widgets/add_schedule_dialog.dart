@@ -374,7 +374,7 @@ class AddScheduleDialogState extends State<AddScheduleDialog> {
       case ValidationError.emptyInput:
         return AppLocalizations.of(context)!.emptyInput;
       default:
-        break;
+        return null;
     }
   }
 
@@ -389,6 +389,8 @@ class AddScheduleDialogState extends State<AddScheduleDialog> {
     if (categoryFromTranslation(context, category) == null) {
       return AppLocalizations.of(context)!.invalidCategory;
     }
+
+    return null;
   }
 
   String? _validateAmount(String? amount) {
@@ -402,7 +404,7 @@ class AddScheduleDialogState extends State<AddScheduleDialog> {
       case ValidationError.numberLessThanMin:
         return AppLocalizations.of(context)!.numberNotGreaterThanZero;
       default:
-        break;
+        return null;
     }
   }
 
@@ -417,7 +419,7 @@ class AddScheduleDialogState extends State<AddScheduleDialog> {
       case ValidationError.numberLessThanMin:
         return AppLocalizations.of(context)!.numberNotGreaterThanZero;
       default:
-        break;
+        return null;
     }
   }
 }

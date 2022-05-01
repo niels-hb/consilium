@@ -285,7 +285,7 @@ class AddTransactionDialogState extends State<AddTransactionDialog> {
       case ValidationError.emptyInput:
         return AppLocalizations.of(context)!.emptyInput;
       default:
-        break;
+        return null;
     }
   }
 
@@ -300,6 +300,8 @@ class AddTransactionDialogState extends State<AddTransactionDialog> {
     if (categoryFromTranslation(context, category) == null) {
       return AppLocalizations.of(context)!.invalidCategory;
     }
+
+    return null;
   }
 
   String? _validateAmount(String? amount) {
@@ -311,7 +313,7 @@ class AddTransactionDialogState extends State<AddTransactionDialog> {
       case ValidationError.unsignedNumberExpected:
         return AppLocalizations.of(context)!.unsignedNumberExpected;
       default:
-        break;
+        return null;
     }
   }
 }

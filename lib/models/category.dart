@@ -137,4 +137,6 @@ Category? categoryFromTranslation(
   } else if (translation == localizations.utilities) {
     return Category.utilities;
   }
+
+  throw UnimplementedError('Category for ($translation) is missing.');
 }
